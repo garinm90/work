@@ -25,9 +25,23 @@ def load_user(id):
 
 
 class Customer(db.Model):
-    customer_name = db.Column(db.String(120), index=True)
-    customer_email = db.Column(db.String(64), index=True, unique=True)
-    customer_id = db.Column(db.Integer, primary_key=True)
-    customer_company = db.Column(db.String(120))
-    customer_phone = db.Column(db.String(20))
-    customer_address = db.Column(db.String(200))
+    name = db.Column(db.String(120), index=True)
+    email = db.Column(db.String(64), index=True, unique=True)
+    id = db.Column(db.Integer, primary_key=True)
+    company = db.Column(db.String(120))
+    phone = db.Column(db.String(20))
+    address = db.Column(db.String(200))
+    order = db.relationship('Order', backref='customer', lazy=True, cascade='delete,all')
+    controller = db.relationship('Controller', backref='customer', lazy=True, cascade='delete,all')
+
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
+
+
+class Controller(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer(), db.ForeignKey('order.id'))
+    customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
+    images = db.Column(db)
