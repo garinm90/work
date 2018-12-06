@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Controller</th>
+            <th>Images</th>
+        </tr>
+        </thead>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>1</td>
+                <td>2</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

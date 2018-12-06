@@ -13,14 +13,18 @@
         </tr>
         <tbody>
         <tr>
-            <td>{{ customer.customer_name }}</td>
-            <td>{{ customer.customer_email }}</td>
-            <td>{{ customer.customer_company }}</td>
-            <td>{{ customer.customer_phone }}</td>
-            <td>{{ customer.customer_address }}</td>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.company }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.address }}</td>
         </tr>
         </tbody>
         </thead>
     </table>
-
+    <div class="col-md-4 text-center">
+        <a class="btn btn-default" href="#">New Controller</a>
+        <a class='btn btn-default' href="{{ url_for('create_order', customer_id=customer.id) }}">New Order</a>
+        <a class='btn btn-default' href="#">New Ride</a>
+    </div>
 {% endblock %}
