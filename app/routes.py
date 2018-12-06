@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, login, db
-from app.forms import LoginForm, RegistrationForm, CreateCustomerForm
-from app.models import User, Customer
+from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm
+from app.models import User, Customer, Order
 
 
 @app.route('/')
@@ -64,18 +64,64 @@ def customers():
 def create_customer():
     form = CreateCustomerForm()
     if form.validate_on_submit():
-        customer = Customer(customer_name=form.customer_name.data, customer_email=form.customer_email.data,
-                            customer_company=form.customer_company.data, customer_phone=form.customer_phone.data,
-                            customer_address=form.customer_address.data)
+        customer = Customer(name=form.name.data, email=form.email.data, company=form.company.data,
+                            phone=form.phone.data,
+                            address=form.address.data)
         db.session.add(customer)
         db.session.commit()
         flash('New customer added!')
-        return redirect(url_for('index'))
+        return redirect(url_for('detail_customer', number=customer.id))
     return render_template('create_customer.html', form=form)
 
 
 @app.route('/customer/<number>')
 @login_required
 def detail_customer(number):
-    customer = Customer.query.filter_by(customer_id=number).first()
+    customer = Customer.query.filter_by(id=number).first()
     return render_template('detail_customer.html', customer=customer)
+
+
+@app.route('/delete_customer/<number>', methods=['GET', 'POST'])
+@login_required
+def delete_customer(number):
+    customer = Customer.query.get_or_404(number)
+    form = DeleteForm()
+    if form.validate_on_submit():
+        db.session.delete(customer)
+        db.session.commit()
+        flash('Customer has been removed')
+        return redirect(url_for('customers'))
+    return render_template('delete.html', form=form, customer=customer)
+
+
+@app.route('/edit_customer/<number>', methods=['GET', 'POST'])
+@login_required
+def edit_customer(number):
+    customer = Customer.query.get(number)
+    form = CreateCustomerForm(obj=customer)
+    if form.validate_on_submit():
+        form.populate_obj(customer)
+        db.session.commit()
+        flash('Successfully Updated')
+        return redirect(url_for('detail_customer', number=customer.id))
+    return render_template('create_customer.html', form=form)
+
+
+@app.route('/create_order')
+@login_required
+def create_order():
+    customer_id = request.args.get('customer_id')
+    order = Order(customer_id=customer_id)
+    db.session.add(order)
+    db.session.commit()
+    flash('New order created')
+    return redirect(url_for('index'))
+
+
+@app.route('/orders')
+@login_required
+def orders():
+    customer_id = request.args.get('customer_id')
+    customer = Customer.query.get(customer_id)
+    orders = customer.order
+    return render_template('orders.html', orders=orders)
