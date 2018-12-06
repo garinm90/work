@@ -2,8 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, login, db
-from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, CreateCustomerForm
+from app.models import User, Customer
 
 
 @app.route('/')
@@ -50,3 +50,32 @@ def register():
         flash('You are now registered!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/customers')
+@login_required
+def customers():
+    customers = Customer.query.all()
+    return render_template('customers.html', customers=customers)
+
+
+@app.route('/create_customer', methods=['GET', 'POST'])
+@login_required
+def create_customer():
+    form = CreateCustomerForm()
+    if form.validate_on_submit():
+        customer = Customer(customer_name=form.customer_name.data, customer_email=form.customer_email.data,
+                            customer_company=form.customer_company.data, customer_phone=form.customer_phone.data,
+                            customer_address=form.customer_address.data)
+        db.session.add(customer)
+        db.session.commit()
+        flash('New customer added!')
+        return redirect(url_for('index'))
+    return render_template('create_customer.html', form=form)
+
+
+@app.route('/customer/<number>')
+@login_required
+def detail_customer(number):
+    customer = Customer.query.filter_by(customer_id=number).first()
+    return render_template('detail_customer.html', customer=customer)

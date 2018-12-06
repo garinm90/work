@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <p><a class="btn btn-primary" href="{{ url_for('create_customer') }}">New Customer</a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Customer</th>
+            <th scope="col">Orders</th>
+            <th scope="col">Controllers</th>
+            <th scope="col">Rides</th>
+        </tr>
+        <tbody>
+        {% for customer in customers %}
+            <tr>
+                <td><a href="{{ url_for('detail_customer', number=1) }}">{{ customer.customer_name }}</a></td>
+                <td><a href="#">3</a></td>
+                <td><a href="#">123</a></td>
+                <td><a href="#">Fireball</a></td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+        </thead>
+    </table>
+
+{% endblock %}

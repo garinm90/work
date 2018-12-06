@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Company</th>
+            <th scope="col">Phone #</th>
+            <th scope="col">Address</th>
+        </tr>
+        <tbody>
+        <tr>
+            <td>{{ customer.customer_name }}</td>
+            <td>{{ customer.customer_email }}</td>
+            <td>{{ customer.customer_company }}</td>
+            <td>{{ customer.customer_phone }}</td>
+            <td>{{ customer.customer_address }}</td>
+        </tr>
+        </tbody>
+        </thead>
+    </table>
+
+{% endblock %}
