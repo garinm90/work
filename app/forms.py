@@ -30,14 +30,18 @@ class RegistrationForm(FlaskForm):
 
 
 class CreateCustomerForm(FlaskForm):
-    customer_name = StringField('Customer name', validators=[DataRequired()])
-    customer_email = StringField('Email', validators=[Email()])
-    customer_company = StringField('Company name')
-    customer_phone = StringField('Phone number')
-    customer_address = TextAreaField()
+    name = StringField('Customer name', validators=[DataRequired()])
+    email = StringField('Email', validators=[Email()])
+    company = StringField('Company name')
+    phone = StringField('Phone number')
+    address = TextAreaField()
     submit = SubmitField('Create Customer')
 
     def validate_email(self, email):
-        customer = Customer.query.filter_by(customer_email=customer_email.data).first()
+        customer = Customer.query.filter_by(email=email.data).first()
         if customer is not None:
             raise ValidationError('Please use a different email address.')
+
+
+class DeleteForm(FlaskForm):
+    delete = SubmitField('Delete')
