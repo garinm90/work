@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
-from app.models import User, Customer
+from app.models import User, Customer, Order
 
 
 class LoginForm(FlaskForm):
@@ -45,3 +45,19 @@ class CreateCustomerForm(FlaskForm):
 
 class DeleteForm(FlaskForm):
     delete = SubmitField('Delete')
+
+
+class CreateOrderForm(FlaskForm):
+    bubble_six = BooleanField()
+    bubble_nine = BooleanField()
+    bubble_fourteen = BooleanField()
+    puck_six = BooleanField()
+    puck_molex_six = BooleanField()
+    puck_nine = BooleanField()
+    long_nineteen = BooleanField()
+    short_nineteen = BooleanField()
+    green_nineteen = BooleanField()
+    ads_twentyfour = BooleanField()
+    ads_thirtysix = BooleanField()
+    customer_id = SelectField('Customer', coerce=int)
+    submit = SubmitField('Create Order')

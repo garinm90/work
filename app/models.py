@@ -38,10 +38,31 @@ class Customer(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
+    controller = db.relationship('Controller', backref='order', lazy=True, cascade='delete,all')
+    bubble_six = db.Column(db.Boolean(), nullable=True)
+    bubble_nine = db.Column(db.Boolean(), nullable=True)
+    bubble_fourteen = db.Column(db.Boolean(), nullable=True)
+    puck_six = db.Column(db.Boolean(), nullable=True)
+    puck_molex_six = db.Column(db.Boolean(), nullable=True)
+    puck_nine = db.Column(db.Boolean(), nullable=True)
+    long_nineteen = db.Column(db.Boolean(), nullable=True)
+    short_nineteen = db.Column(db.Boolean(), nullable=True)
+    green_nineteen = db.Column(db.Boolean(), nullable=True)
+    ads_twentyfour = db.Column(db.Boolean(), nullable=True)
+    ads_thirtysix = db.Column(db.Boolean(), nullable=True)
+    two_forty = db.Column(db.Boolean(), nullable=True)
+    three_twenty = db.Column(db.Boolean(), nullable=True)
 
 
 class Controller(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer(), db.ForeignKey('order.id'))
     customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
-    images = db.Column(db)
+    image = db.relationship('Image', backref='controller', lazy=True, cascade='delete,all')
+
+
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String())
+    url = db.Column(db.String())
+    controller_id = db.Column(db.Integer(), db.ForeignKey('controller.id'))

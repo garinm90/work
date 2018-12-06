@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, login, db
-from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm
+from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm
 from app.models import User, Customer, Order
 
 
@@ -107,15 +107,12 @@ def edit_customer(number):
     return render_template('create_customer.html', form=form)
 
 
-@app.route('/create_order')
+@app.route('/create_order', methods=['GET', 'POST'])
 @login_required
 def create_order():
-    customer_id = request.args.get('customer_id')
-    order = Order(customer_id=customer_id)
-    db.session.add(order)
-    db.session.commit()
-    flash('New order created')
-    return redirect(url_for('index'))
+    form = CreateOrderForm()
+    form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
+    return render_template('create_order.html', form=form)
 
 
 @app.route('/orders')
@@ -124,4 +121,5 @@ def orders():
     customer_id = request.args.get('customer_id')
     customer = Customer.query.get(customer_id)
     orders = customer.order
+    print(customer.order)
     return render_template('orders.html', orders=orders)

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>New Order</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Light Style</th>
+                    <th>LEDs</th>
+                    <th>Active</th>
+                </tr>
+                </thead>
+                <tbody>
+                <form action="" method="post" class="form-inline">
+                    <tr class="bg-info">
+                        <td>Bubble</td>
+                        <td>6</td>
+                        <td>{{ form.bubble_six }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bubble</td>
+                        <td>9</td>
+                        <td>{{ form.bubble_nine }}</td>
+                    </tr>
+                    <tr class="bg-info">
+                        <td>Bubble</td>
+                        <td>14</td>
+                        <td>{{ form.bubble_fourteen }}</td>
+                    </tr>
+                    <tr>
+                        <td>Puck</td>
+                        <td>6</td>
+                        <td>{{ form.puck_six }}</td>
+                    </tr>
+                    <tr class="bg-info">
+                        <td>Molex Puck</td>
+                        <td>6</td>
+                        <td>{{ form.puck_molex_six }}</td>
+                    </tr>
+                    <tr>
+                        <td>Puck</td>
+                        <td>9</td>
+                        <td>{{ form.puck_nine }}</td>
+                    </tr>
+                    <tr class="bg-info">
+                        <td>Long Wire</td>
+                        <td>19</td>
+                        <td>{{ form.long_nineteen }}</td>
+                    </tr>
+                    <tr>
+                        <td>Short Wire</td>
+                        <td>19</td>
+                        <td>{{ form.short_nineteen }}</td>
+                    </tr>
+                    <tr class="bg-info">
+                        <td>Green Short Wire</td>
+                        <td>19</td>
+                        <td>{{ form.green_nineteen }}</td>
+                    </tr>
+                    <tr>
+                        <td>ADS Long</td>
+                        <td>24</td>
+                        <td>{{ form.ads_twentyfour }}</td>
+                    </tr>
+                    <tr class="bg-info">
+                        <td>ADS Long</td>
+                        <td>36</td>
+                        <td>{{ form.ads_thirtysix }}</td>
+                    </tr>
+                    {{ form.customer_id.label }}<br>
+                    {{ form.customer_id(class_='form-control') }}
+
+                </tbody>
+                </form>
+            </table>
+        </div>
+    </div>
+    <div>
+        {{ form.submit(class_='btn btn-primary btn-lg btn-block') }}
+    </div>
+{% endblock %}
