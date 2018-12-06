@@ -112,6 +112,18 @@ def edit_customer(number):
 def create_order():
     form = CreateOrderForm()
     form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
+    if form.validate_on_submit():
+        order = Order(customer_id=form.customer_id.data, bubble_six=form.bubble_six.data,
+                      bubble_nine=form.bubble_nine.data, bubble_fourteen=form.bubble_fourteen.data,
+                      puck_six=form.puck_six.data, puck_molex_six=form.puck_molex_six.data,
+                      puck_nine=form.puck_nine.data, long_nineteen=form.long_nineteen.data,
+                      short_nineteen=form.short_nineteen.data, green_nineteen=form.green_nineteen.data,
+                      ads_thirtysix=form.ads_thirtysix.data, ads_twentyfour=form.ads_twentyfour.data,
+                      three_twenty=form.three_twenty.data, two_forty=form.two_forty.data)
+        db.session.add(order)
+        db.session.commit()
+        flash('Order created!')
+        return redirect(url_for('index'))
     return render_template('create_order.html', form=form)
 
 
@@ -121,5 +133,5 @@ def orders():
     customer_id = request.args.get('customer_id')
     customer = Customer.query.get(customer_id)
     orders = customer.order
-    print(customer.order)
+    print(orders)
     return render_template('orders.html', orders=orders)

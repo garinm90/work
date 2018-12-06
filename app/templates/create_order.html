@@ -4,17 +4,20 @@
 {% block app_content %}
     <h1>New Order</h1>
     <div class="row">
-        <div class="col-md-4">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Light Style</th>
-                    <th>LEDs</th>
-                    <th>Active</th>
-                </tr>
-                </thead>
-                <tbody>
-                <form action="" method="post" class="form-inline">
+        <div class="col-md-12">
+            <form action="" method="post" class="form-inline">
+                {{ form.hidden_tag() }}
+                {{ wtf.form_errors(form, hiddens='only') }}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Light Style</th>
+                        <th>LEDs</th>
+                        <th>Active</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
                     <tr class="bg-info">
                         <td>Bubble</td>
                         <td>6</td>
@@ -70,15 +73,25 @@
                         <td>36</td>
                         <td>{{ form.ads_thirtysix }}</td>
                     </tr>
-                    {{ form.customer_id.label }}<br>
-                    {{ form.customer_id(class_='form-control') }}
 
-                </tbody>
-                </form>
-            </table>
+                    </tbody>
+                </table>
+                <ul class="list-inline">
+                    <li>{{ form.customer_id.label }}</li>
+                    <li>{{ form.customer_id(class_='form-control') }}</li>
+                    <li><strong>Power Supplies:</strong></li>
+                    <li>{{ form.two_forty.label }}</li>
+                    <li>{{ form.two_forty() }}</li>
+                    <li>{{ form.three_twenty.label }}</li>
+                    <li>{{ form.three_twenty() }}</li>
+                </ul>
+                <ul></ul>
         </div>
+
     </div>
+
     <div>
         {{ form.submit(class_='btn btn-primary btn-lg btn-block') }}
     </div>
+    </form>
 {% endblock %}

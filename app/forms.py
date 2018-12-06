@@ -61,3 +61,5 @@ class CreateOrderForm(FlaskForm):
     ads_thirtysix = BooleanField()
     customer_id = SelectField('Customer', coerce=int)
     submit = SubmitField('Create Order')
+    two_forty = BooleanField("Two Forty")
+    three_twenty = BooleanField("Three Twenty")
