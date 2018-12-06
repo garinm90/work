@@ -2,10 +2,21 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Hi, {{ current_user.username }}</h1>
-    {% if form %}
-        {{ wtf.quick_form(form) }}
-        <br>
-    {% endif %}
 
+    <div class="row text-center">
+        <h1>Hi, {{ current_user.username.capitalize() }}</h1>
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{{ url_for('create_order') }}">Create Order</a>
+            <a class="btn btn-primary" href="{{ url_for('create_customer') }}">Create Customer</a>
+            <a class="btn btn-primary" href="url_for('create_order')">Create Controller</a>
+        </div>
+    </div>
+    <br>
+    <div class="row text-center">
+        <div class="col-md-12">
+            <a class="btn btn-info" href="url_for('create_order')">List Orders</a>
+            <a class="btn btn-info" href="{{ url_for('customers') }}">List Customers</a>
+            <a class="btn btn-info" href="url_for('create_order')">List Controllers</a>
+        </div>
+    </div>
 {% endblock %}
