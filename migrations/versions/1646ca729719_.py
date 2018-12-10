@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 03d12de69db5
+Revision ID: 1646ca729719
 Revises: 
-Create Date: 2018-12-06 12:27:06.035793
+Create Date: 2018-12-07 10:34:42.904976
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '03d12de69db5'
+revision = '1646ca729719'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -52,6 +52,8 @@ def upgrade():
     sa.Column('green_nineteen', sa.Boolean(), nullable=True),
     sa.Column('ads_twentyfour', sa.Boolean(), nullable=True),
     sa.Column('ads_thirtysix', sa.Boolean(), nullable=True),
+    sa.Column('two_forty', sa.Boolean(), nullable=True),
+    sa.Column('three_twenty', sa.Boolean(), nullable=True),
     sa.ForeignKeyConstraint(['customer_id'], ['customer.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -68,7 +70,9 @@ def upgrade():
     sa.Column('filename', sa.String(), nullable=True),
     sa.Column('url', sa.String(), nullable=True),
     sa.Column('controller_id', sa.Integer(), nullable=True),
+    sa.Column('order_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['controller_id'], ['controller.id'], ),
+    sa.ForeignKeyConstraint(['order_id'], ['order.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

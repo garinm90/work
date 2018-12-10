@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from app import app, login, db
-from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm
-from app.models import User, Customer, Order
+from app import app, login, db, images
+from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm
+from app.models import User, Customer, Order, Image
 
 
 @app.route('/')
@@ -112,6 +112,7 @@ def edit_customer(number):
 def create_order():
     form = CreateOrderForm()
     form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
+    print(form.customer_id.choices)
     if form.validate_on_submit():
         order = Order(customer_id=form.customer_id.data, bubble_six=form.bubble_six.data,
                       bubble_nine=form.bubble_nine.data, bubble_fourteen=form.bubble_fourteen.data,
@@ -127,11 +128,50 @@ def create_order():
     return render_template('create_order.html', form=form)
 
 
-@app.route('/orders')
+@app.route('/orders/<customer_id>')
 @login_required
-def orders():
-    customer_id = request.args.get('customer_id')
+def customer_orders(customer_id):
     customer = Customer.query.get(customer_id)
     orders = customer.order
-    print(orders)
+    for order in orders:
+        for image in order.image:
+            url = images.url(image.filename)
+            print(url)
     return render_template('orders.html', orders=orders)
+
+
+@app.route('/orders')
+def list_orders():
+    orders = Order.query.all()
+    return render_template('list_orders.html', orders=orders)
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    form = ImageUploadForm()
+    orders = Order.query.all()
+    orders = [(o.id, '{} Order #{}'.format(o.customer, o.id)) for o in orders]
+    form.order.choices = orders
+    pictures = request.files.getlist("images")
+    if request.method == 'POST':
+        print(pictures)
+        for picture in pictures:
+            print(picture)
+            filename = images.save(request.files['images'])
+            i = Image(filename=filename, order_id=form.order.data)
+            db.session.add(i)
+            db.session.commit()
+            flash('Uploaded!')
+            print(picture)
+        return redirect(url_for('view_images', order_id=form.order.data))
+    return render_template('upload.html', form=form)
+
+
+@app.route('/order/<order_id>/images')
+@login_required
+def view_images(order_id):
+    pictures = Image.query.filter_by(order_id=order_id).all()
+    image_files = []
+    for image in pictures:
+        image_files.append(images.url(image.filename))
+    return render_template('images.html', pictures=image_files)

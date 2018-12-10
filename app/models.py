@@ -34,6 +34,9 @@ class Customer(db.Model):
     order = db.relationship('Order', backref='customer', lazy=True, cascade='delete,all')
     controller = db.relationship('Controller', backref='customer', lazy=True, cascade='delete,all')
 
+    def __repr__(self):
+        return self.name
+
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,6 +55,7 @@ class Order(db.Model):
     ads_thirtysix = db.Column(db.Boolean(), nullable=True)
     two_forty = db.Column(db.Boolean(), nullable=True)
     three_twenty = db.Column(db.Boolean(), nullable=True)
+    image = db.relationship('Image', backref='order', lazy=True, cascade='delete,all')
 
 
 class Controller(db.Model):
@@ -66,3 +70,4 @@ class Image(db.Model):
     filename = db.Column(db.String())
     url = db.Column(db.String())
     controller_id = db.Column(db.Integer(), db.ForeignKey('controller.id'))
+    order_id = db.Column(db.Integer(), db.ForeignKey('order.id'))

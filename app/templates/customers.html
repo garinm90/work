@@ -14,7 +14,8 @@
                 <td>
                     <a href="{{ url_for('detail_customer', number=customer.id) }}">{{ customer.name }}</a>
                 </td>
-                <td><a class="btn btn-default" href="{{ url_for('orders', customer_id=customer.id) }}">Orders</a></td>
+                <td><a class="btn btn-default"
+                       href="{{ url_for('customer_orders', customer_id=customer.id) }}">Orders</a></td>
                 <td><a class="btn btn-default" href="#">Controllers</a></td>
                 <td><a class="btn btn-default" href="#">Rides</a></td>
                 <td><a class="btn btn-info" href="{{ url_for('edit_customer', number=customer.id) }}">Edit</a>

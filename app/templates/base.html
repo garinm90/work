@@ -1,4 +1,9 @@
 {% extends 'bootstrap/base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
 
 {% block title %}
     {% if title %}{{ title }} - Portal{% else %}Welcome to Information{% endif %}
@@ -22,7 +27,7 @@
                     <li><a href="{{ url_for('index') }}">Home</a></li>
                     <li><a href="{{ url_for('customers') }}">Customers</a></li>
                     <li><a href="#">Controllers</a></li>
-                    <li><a href="#">Orders</a></li>
+                    <li><a href="{{ url_for('list_orders') }}">Orders</a></li>
                     <li><a href="#">Rides</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

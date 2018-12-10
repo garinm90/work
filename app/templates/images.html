@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block app_content %}
+
+    {% if pictures %}
+
+        {% for image in pictures %}
+            <div class="display">
+                <div class="zoom">
+                    <a href="{{ image }}">
+                        <img src="{{ image }}" alt="">
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h3>Nothing uploaded</h3>
+        <a class="btn btn-primary" href="{{ url_for('upload') }}">Click to upload</a>
+    {% endif %}
+
+{% endblock %}
