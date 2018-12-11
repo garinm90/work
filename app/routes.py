@@ -2,7 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, login, db, images
-from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm
+from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm, \
+    QuoteForm
 from app.models import User, Customer, Order, Image
 
 
@@ -175,3 +176,22 @@ def view_images(order_id):
     for image in pictures:
         image_files.append(images.url(image.filename))
     return render_template('images.html', pictures=image_files)
+
+
+@app.route('/quote_one')
+@login_required
+def quote_one():
+    form = QuoteForm()
+    if request.method == 'POST':
+        return redirect(url_for('quote_two'))
+    return render_template('quote_first.html', form=form)
+
+
+@app.route('/quote_two')
+@login_required
+def quote_two():
+    form = QuoteForm()
+    if request.method == 'POST':
+        eight_by_six = int(form.eight_by_six.data)
+        eight_by_size_price = eight_by_six * 80
+        total = eight_by_size_price + bubble_nine_price

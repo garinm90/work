@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, \
-    MultipleFileField, FileField
+    MultipleFileField, FileField, IntegerField, widgets
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import User, Customer, Order
 
@@ -70,3 +70,13 @@ class ImageUploadForm(FlaskForm):
     images = MultipleFileField('Upload Images', id='images')
     order = SelectField('Order')
     submit = SubmitField('Upload')
+
+
+class QuoteForm(FlaskForm):
+    bubble_six = IntegerField('Bubble 6', widget=widgets.Input(input_type='number'))
+    bubble_nine = IntegerField('Bubble 9', widget=widgets.Input(input_type='number'))
+    bubble_fourteen = IntegerField('Bubble 14', widget=widgets.Input(input_type='number'))
+    puck_six = IntegerField('Puck 6', widget=widgets.Input(input_type='number'))
+    puck_molex_six = IntegerField('Puck 6 Molex', widget=widgets.Input(input_type='number'))
+    puck_nine = IntegerField('Puck 9', widget=widgets.Input(input_type='number'))
+    submit = SubmitField('Submit')
