@@ -7,17 +7,15 @@
         <thead>
         <tr>
             <th>Order #</th>
-            <th>Controller</th>
-            <th>Images</th>
+            <th>Ride</th>
             <th>Power Supply</th>
             <th>Lights</th>
         </tr>
         </thead>
         {% for order in orders %}
             <tr>
-                <td>{{ order.id }}</td>
-                <td>1</td>
-                <td>2</td>
+                <td><a href="{{ url_for('detail_order', number=order.id) }}">{{ order.id }} Details</a></td>
+                <td>{{ order.ride }}</td>
                 {% if order.two_forty and order.three_twenty %}
                     <td>Both</td>
                 {% elif order.three_twenty %}

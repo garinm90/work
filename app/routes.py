@@ -127,7 +127,7 @@ def create_order():
         db.session.commit()
         flash('Order created!')
         return redirect(url_for('index'))
-    return render_template('create_order.html', form=form, title=f'New order for {customer.name}')
+    return render_template('create_order.html', form=form, title=f'Create order for {customer.name.title()}')
 
 
 @app.route('/edit_order/<number>', methods=['GET', 'POST'])

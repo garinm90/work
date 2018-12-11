@@ -2,7 +2,9 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>{{ title }}</h1>
+    <div class="text-center">
+        <h1>{{ title }}</h1>
+    </div>
     <div class="row">
         <div class="col-md-12">
             {{ wtf.quick_form(form) }}

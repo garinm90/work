@@ -12,7 +12,7 @@
         {% for customer in customers %}
             <tr>
                 <td>
-                    <a href="{{ url_for('detail_customer', number=customer.id) }}">{{ customer.name }}</a>
+                    <a href="{{ url_for('detail_customer', number=customer.id) }}">{{ customer.name.title() }}</a>
                 </td>
                 <td><a class="btn btn-default"
                        href="{{ url_for('customer_orders', customer_id=customer.id) }}">Orders</a></td>
