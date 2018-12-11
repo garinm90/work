@@ -130,6 +130,22 @@ def create_order():
     return render_template('create_order.html', form=form, title=f'New order for {customer.name}')
 
 
+@app.route('/edit_order/<number>', methods=['GET', 'POST'])
+@login_required
+def edit_order(number):
+    order = Order.query.get(number)
+    print(order)
+    form = CreateOrderForm(obj=order)
+    form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
+    print(form)
+    if form.validate_on_submit():
+        form.populate_obj(order)
+        db.session.commit()
+        flash(f'Updated {order.customer_id}')
+        return redirect(url_for('index'))
+    return render_template('create_order.html', form=form, title='Hello')
+
+
 @app.route('/orders/<customer_id>')
 @login_required
 def customer_orders(customer_id):
@@ -139,13 +155,13 @@ def customer_orders(customer_id):
         for image in order.image:
             url = images.url(image.filename)
             print(url)
-    return render_template('orders.html', orders=orders)
+    return render_template('orders.html', orders=orders, title=f'Order List for {customer.name}')
 
 
 @app.route('/orders')
 def list_orders():
     orders = Order.query.all()
-    return render_template('list_orders.html', orders=orders)
+    return render_template('list_orders.html', orders=orders, title='All Orders')
 
 
 @app.route('/upload', methods=['GET', 'POST'])
