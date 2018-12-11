@@ -7,18 +7,42 @@
         <form class="form" action="{{ url_for('quote_two') }}" method="post">
             {{ form.hidden_tag() }}
             {{ wtf.form_errors(form, hiddens="only") }}
-            <div class="col-xs-2">
+            {% if part_one %}
+                <div class="col-xs-2">
+                    <h3>Bubbles</h3>
+                    {{ wtf.form_field(form.bubble_six) }}
+                    {{ wtf.form_field(form.bubble_nine) }}
+                    {{ wtf.form_field(form.bubble_fourteen) }}
+                    {{ wtf.form_field(form.submit) }}
+                </div>
 
-                {{ wtf.form_field(form.bubble_six) }}
-                {{ wtf.form_field(form.bubble_nine) }}
-                {{ wtf.form_field(form.bubble_fourteen) }}
-            </div>
+                <div class="col-xs-2">
+                    <h3>Pucks</h3>
+                    {{ wtf.form_field(form.puck_six) }}
+                    {{ wtf.form_field(form.puck_molex_six) }}
+                    {{ wtf.form_field(form.puck_nine) }}
 
-            <div class="col-xs-2">
+                </div>
+                <div class="col-xs-2">
+                    <h3>Nineteens</h3>
+                    {{ wtf.form_field(form.long_nineteen) }}
+                    {{ wtf.form_field(form.short_nineteen) }}
+                    {{ wtf.form_field(form.green_nineteen) }}
 
-            </div>
-
-
+                </div>
+                <div class="col-xs-2">
+                    <h3>Long Lights</h3>
+                    {{ wtf.form_field(form.ads_twentyfour) }}
+                    {{ wtf.form_field(form.ads_thirtysix) }}
+                </div>
+            {% elif part_two %}
+                <h1>Part Two</h1>
+                <div>
+                    {{ wtf.form_field(form.two_forty) }}
+                    {{ wtf.form_field(form.three_twenty) }}
+                    {{ wtf.form_field(form.submit) }}
+                </div>
+            {% endif %}
         </form>
     </div>
 {% endblock %}
