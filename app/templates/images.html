@@ -5,19 +5,20 @@
 {% block app_content %}
 
     {% if pictures %}
-
+        <div class="row">
         {% for image in pictures %}
-            <div class="display">
-                <div class="zoom">
-                    <a href="{{ image }}">
-                        <img src="{{ image }}" alt="">
-                    </a>
-                </div>
+            <div class="col-md-3">
+
+                <a href="{{ image }}">
+                    <img class="thumbnail" src="{{ image }}" alt="">
+                </a>
+
             </div>
         {% endfor %}
     {% else %}
         <h3>Nothing uploaded</h3>
     {% endif %}
+</div>
     <br>
     <a class="btn btn-primary" href="{{ url_for('upload', order_id=order_id) }}">Click to upload</a>
 
