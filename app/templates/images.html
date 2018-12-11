@@ -17,7 +17,8 @@
         {% endfor %}
     {% else %}
         <h3>Nothing uploaded</h3>
-        <a class="btn btn-primary" href="{{ url_for('upload') }}">Click to upload</a>
     {% endif %}
+    <br>
+    <a class="btn btn-primary" href="{{ url_for('upload', order_id=order_id) }}">Click to upload</a>
 
 {% endblock %}

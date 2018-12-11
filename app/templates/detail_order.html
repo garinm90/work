@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Order #</th>
+            <th>Controller</th>
+            <th>Images</th>
+            <th>Power Supply</th>
+            <th>Lights</th>
+        </tr>
+        </thead>
+
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>1</td>
+            <td>2</td>
+            {% if order.two_forty and order.three_twenty %}
+                <td>Both</td>
+            {% elif order.three_twenty %}
+                <td>320</td>
+            {% elif order.two_forty %}
+                <td>240</td>
+            {% endif %}
+            <td>
+                <ul>
+                    {% if order.bubble_six %}
+                        <li>Bubble 6</li>
+                    {% endif %}
+
+                    {% if order.bubble_nine %}
+                        <li>Bubble 9</li>
+                    {% endif %}
+
+                    {% if order.bubble_fourteen %}
+                        <li>Bubble 14</li>
+                    {% endif %}
+
+                    {% if order.puck_six %}
+                        <li>Puck 6</li>
+                    {% endif %}
+                    {% if order.puck_molex_six %}
+                        <li>Molex Puck 6</li>
+                    {% endif %}
+                    {% if order.puck_nine %}
+                        <li>Puck 9</li>
+                    {% endif %}
+                    {% if order.long_nineteen %}
+                        <li>Longwire 19</li>
+                    {% endif %}
+                    {% if order.short_nineteen %}
+                        <li>Short 19</li>
+                    {% endif %}
+                    {% if order.green_nineteen %}
+                        <li>Green 19</li>
+                    {% endif %}
+                    {% if order.ads_twentyfour %}
+                        <li>ADS 24</li>
+                    {% endif %}
+                    {% if order.ads_thirtysix %}
+                        <li>ADS 36</li>
+                    {% endif %}
+
+
+                </ul>
+            </td>
+        </tr>
+
+    </table>
+    {% for image in order.image %}
+        <div class="display">
+            <div class="zoom">
+                <img src="{{ image_url(image.filename) }}" alt="">
+            </div>
+        </div>
+    {% endfor %}
+    <br>
+    <a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
+
+
+{% endblock %}

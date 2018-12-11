@@ -56,6 +56,7 @@ class Order(db.Model):
     two_forty = db.Column(db.Boolean(), nullable=True)
     three_twenty = db.Column(db.Boolean(), nullable=True)
     image = db.relationship('Image', backref='order', lazy=True, cascade='delete,all')
+    ride = db.Column(db.String(128), nullable=True)
 
 
 class Controller(db.Model):
