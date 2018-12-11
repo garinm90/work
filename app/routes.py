@@ -179,24 +179,20 @@ def list_orders():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     order_id = request.args.get('order_id', 1)
-    print(order_id)
     form = ImageUploadForm(order=order_id)
     orders = Order.query.all()
-    orders = [(o.id, '{} Order #{}'.format(o.customer, o.id)) for o in orders]
+    order_information = Order.query.get(int(order_id))
+    orders = [(o.id, '{} Order #{}'.format(o.customer, o.id, o.ride)) for o in orders]
     form.order.choices = orders
-    pictures = request.files.getlist("images")
     if request.method == 'POST':
-        print(pictures)
-        for picture in pictures:
-            print(picture)
-            filename = images.save(request.files['images'])
+        for picture in request.files.getlist("images"):
+            filename = images.save(picture)
             i = Image(filename=filename, order_id=form.order.data)
             db.session.add(i)
             db.session.commit()
-            flash('Uploaded!')
-            print(picture)
+        flash('Uploaded!')
         return redirect(url_for('view_images', order_id=form.order.data))
-    return render_template('upload.html', form=form)
+    return render_template('upload.html', form=form, order_information=order_information)
 
 
 @app.route('/order/<order_id>/images')
