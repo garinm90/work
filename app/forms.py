@@ -61,9 +61,10 @@ class CreateOrderForm(FlaskForm):
     ads_twentyfour = BooleanField()
     ads_thirtysix = BooleanField()
     customer_id = SelectField('Customer', coerce=int)
-    submit = SubmitField('Create Order')
+    submit = SubmitField('Submit Order')
     two_forty = BooleanField("Two Forty")
     three_twenty = BooleanField("Three Twenty")
+    ride = StringField('Ride Name:')
 
 
 class ImageUploadForm(FlaskForm):
