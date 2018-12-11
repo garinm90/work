@@ -18,8 +18,14 @@
     {% else %}
         <h3>Nothing uploaded</h3>
     {% endif %}
+<br>
 </div>
-    <br>
-    <a class="btn btn-primary" href="{{ url_for('upload', order_id=order_id) }}">Click to upload</a>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 col-sm-6 col-xs-6">
+                <a class="btn btn-primary btn-block" href="{{ url_for('upload', order_id=order_id) }}">Click to
+                    upload</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -16,7 +16,7 @@
         {% for order in orders %}
             <tr>
                 <td>
-                    <a href="{{ url_for('customer_orders', customer_id=order.customer.id) }}">{{ order.id }}</a>
+                    <a href="{{ url_for('detail_order', number=order.id) }}">{{ order.id }}</a>
                 </td>
                 <td>
                     <a href="{{ url_for('customer_orders', customer_id=order.customer.id) }}">{{ order.customer.name }}</a>

@@ -69,15 +69,23 @@
         </tr>
 
     </table>
-    {% for image in order.image %}
-        <div class="display">
-            <div class="zoom">
-                <img src="{{ image_url(image.filename) }}" alt="">
+    <div class="row">
+
+        {% for image in order.image %}
+            <div class="col-md-4 col-lg-3 col-sm-6 col-xs-6">
+                <a href="{{ image_url(image.filename) }}"><img class="thumbnail" src="{{ image_url(image.filename) }}"
+                                                               alt=""></a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <a class="btn btn-primary btn-block" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
             </div>
         </div>
-    {% endfor %}
-    <br>
-    <a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
-
+    </div>
 
 {% endblock %}
