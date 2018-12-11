@@ -2,7 +2,8 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, login, db, images
-from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm
+from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm, \
+    QuoteForm
 from app.models import User, Customer, Order, Image
 
 
@@ -56,7 +57,7 @@ def register():
 @login_required
 def customers():
     customers = Customer.query.all()
-    return render_template('customers.html', customers=customers)
+    return render_template('customers.html', title='Customer List', customers=customers)
 
 
 @app.route('/create_customer', methods=['GET', 'POST'])
@@ -71,14 +72,14 @@ def create_customer():
         db.session.commit()
         flash('New customer added!')
         return redirect(url_for('detail_customer', number=customer.id))
-    return render_template('create_customer.html', form=form)
+    return render_template('create_customer.html', title='Create Customer', form=form)
 
 
 @app.route('/customer/<number>')
 @login_required
 def detail_customer(number):
     customer = Customer.query.filter_by(id=number).first()
-    return render_template('detail_customer.html', customer=customer)
+    return render_template('detail_customer.html', title=customer.name, customer=customer)
 
 
 @app.route('/delete_customer/<number>', methods=['GET', 'POST'])
@@ -91,7 +92,7 @@ def delete_customer(number):
         db.session.commit()
         flash('Customer has been removed')
         return redirect(url_for('customers'))
-    return render_template('delete.html', form=form, customer=customer)
+    return render_template('delete.html', form=form, customer=customer, title=f'Delete {customer.name}')
 
 
 @app.route('/edit_customer/<number>', methods=['GET', 'POST'])
@@ -104,15 +105,16 @@ def edit_customer(number):
         db.session.commit()
         flash('Successfully Updated')
         return redirect(url_for('detail_customer', number=customer.id))
-    return render_template('create_customer.html', form=form)
+    return render_template('create_customer.html', title=f'Edit: {customer.name}', form=form)
 
 
 @app.route('/create_order', methods=['GET', 'POST'])
 @login_required
 def create_order():
-    form = CreateOrderForm()
+    customer_number = request.args.get('customer_id', 1)
+    form = CreateOrderForm(customer_id=customer_number)
+    customer = Customer.query.get(customer_number)
     form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
-    print(form.customer_id.choices)
     if form.validate_on_submit():
         order = Order(customer_id=form.customer_id.data, bubble_six=form.bubble_six.data,
                       bubble_nine=form.bubble_nine.data, bubble_fourteen=form.bubble_fourteen.data,
@@ -125,7 +127,7 @@ def create_order():
         db.session.commit()
         flash('Order created!')
         return redirect(url_for('index'))
-    return render_template('create_order.html', form=form)
+    return render_template('create_order.html', form=form, title=f'New order for {customer.name}')
 
 
 @app.route('/orders/<customer_id>')
@@ -175,3 +177,21 @@ def view_images(order_id):
     for image in pictures:
         image_files.append(images.url(image.filename))
     return render_template('images.html', pictures=image_files)
+
+
+@app.route('/quote_one', methods=['GET', 'POST'])
+@login_required
+def quote_one():
+    form = QuoteForm()
+    part_one = True
+    if request.method == 'POST':
+        return redirect(url_for('quote_two'))
+    return render_template('quote_first.html', form=form, part_one=part_one)
+
+
+@app.route('/quote_two', methods=['GET', 'POST'])
+@login_required
+def quote_two():
+    form = QuoteForm()
+    part_two = True
+    return render_template('quote_first.html', form=form, part_two=part_two)
