@@ -15,7 +15,7 @@
         {% for order in orders %}
             <tr>
                 <td><a href="{{ url_for('detail_order', number=order.id) }}">{{ order.id }} Details</a></td>
-                <td>{{ order.ride }}</td>
+                <td>{{ order.ride.capitalize() }}</td>
                 {% if order.two_forty and order.three_twenty %}
                     <td>Both</td>
                 {% elif order.three_twenty %}

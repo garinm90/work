@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from app import app, login, db, images
+from app import app, db, images
 from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm, \
     QuoteForm
 from app.models import User, Customer, Order, Image
@@ -63,9 +63,9 @@ def customers():
 @app.route('/create_customer', methods=['GET', 'POST'])
 @login_required
 def create_customer():
-    form = CreateCustomerForm()
+    form = CreateCustomerForm(original_email="")
     if form.validate_on_submit():
-        customer = Customer(name=form.name.data, email=form.email.data, company=form.company.data,
+        customer = Customer(name=form.name.data.lower(), email=form.email.data, company=form.company.data,
                             phone=form.phone.data,
                             address=form.address.data)
         db.session.add(customer)
@@ -79,7 +79,7 @@ def create_customer():
 @login_required
 def detail_customer(number):
     customer = Customer.query.filter_by(id=number).first()
-    return render_template('detail_customer.html', title=customer.name, customer=customer)
+    return render_template('detail_customer.html', title=customer.name.title(), customer=customer)
 
 
 @app.route('/delete_customer/<number>', methods=['GET', 'POST'])
@@ -99,22 +99,23 @@ def delete_customer(number):
 @login_required
 def edit_customer(number):
     customer = Customer.query.get(number)
-    form = CreateCustomerForm(obj=customer)
+    form = CreateCustomerForm(obj=customer, original_email=customer.email)
     if form.validate_on_submit():
         form.populate_obj(customer)
+        customer.set_lower()
         db.session.commit()
         flash('Successfully Updated')
         return redirect(url_for('detail_customer', number=customer.id))
-    return render_template('create_customer.html', title=f'Edit: {customer.name}', form=form)
+    return render_template('create_customer.html', title=f'Edit: {customer.name.title()}', form=form)
 
 
 @app.route('/create_order', methods=['GET', 'POST'])
 @login_required
 def create_order():
     customer_number = request.args.get('customer_id', 1)
-    form = CreateOrderForm(customer_id=customer_number)
+    form = CreateOrderForm(obj=request.form, customer_id=customer_number)
     customer = Customer.query.get(customer_number)
-    form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
+    form.customer_id.choices = [(g.id, g.name.title()) for g in Customer.query.all()]
     if form.validate_on_submit():
         order = Order(customer_id=form.customer_id.data, bubble_six=form.bubble_six.data,
                       bubble_nine=form.bubble_nine.data, bubble_fourteen=form.bubble_fourteen.data,
@@ -122,7 +123,8 @@ def create_order():
                       puck_nine=form.puck_nine.data, long_nineteen=form.long_nineteen.data,
                       short_nineteen=form.short_nineteen.data, green_nineteen=form.green_nineteen.data,
                       ads_thirtysix=form.ads_thirtysix.data, ads_twentyfour=form.ads_twentyfour.data,
-                      three_twenty=form.three_twenty.data, two_forty=form.two_forty.data)
+                      three_twenty=form.three_twenty.data, two_forty=form.two_forty.data, ride=form.ride.data.lower())
+        order.set_lower()
         db.session.add(order)
         db.session.commit()
         flash('Order created!')
@@ -134,12 +136,11 @@ def create_order():
 @login_required
 def edit_order(number):
     order = Order.query.get(number)
-    print(order)
     form = CreateOrderForm(obj=order)
-    form.customer_id.choices = [(g.id, g.name) for g in Customer.query.all()]
-    print(form)
+    form.customer_id.choices = [(g.id, g.name.title()) for g in Customer.query.all()]
     if form.validate_on_submit():
         form.populate_obj(order)
+        order.set_lower()
         db.session.commit()
         flash(f'Updated {order.customer_id}')
         return redirect(url_for('index'))
@@ -167,7 +168,7 @@ def customer_orders(customer_id):
         for image in order.image:
             url = images.url(image.filename)
             print(url)
-    return render_template('orders.html', orders=orders, title=f'Order List for {customer.name}')
+    return render_template('orders.html', orders=orders, title=f'Order List for {customer.name.title()}')
 
 
 @app.route('/orders')

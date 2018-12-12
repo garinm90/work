@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, \
     MultipleFileField, FileField, IntegerField, widgets
-from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
+from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, NumberRange
 from app.models import User, Customer, Order
 
 
@@ -38,10 +38,15 @@ class CreateCustomerForm(FlaskForm):
     address = TextAreaField()
     submit = SubmitField('Create Customer')
 
+    def __init__(self, original_email, *args, **kwargs):
+        super(CreateCustomerForm, self).__init__(*args, **kwargs)
+        self.original_email = original_email
+
     def validate_email(self, email):
-        customer = Customer.query.filter_by(email=email.data).first()
-        if customer is not None:
-            raise ValidationError('Please use a different email address.')
+        if email.data != self.original_email:
+            customer = Customer.query.filter_by(email=self.email.data).first()
+            if customer is not None:
+                raise ValidationError('Please use a different email address.')
 
 
 class DeleteForm(FlaskForm):
@@ -49,21 +54,34 @@ class DeleteForm(FlaskForm):
 
 
 class CreateOrderForm(FlaskForm):
-    bubble_six = BooleanField()
-    bubble_nine = BooleanField()
-    bubble_fourteen = BooleanField()
-    puck_six = BooleanField()
-    puck_molex_six = BooleanField()
-    puck_nine = BooleanField()
-    long_nineteen = BooleanField()
-    short_nineteen = BooleanField()
-    green_nineteen = BooleanField()
-    ads_twentyfour = BooleanField()
-    ads_thirtysix = BooleanField()
+    bubble_six = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                              validators=[NumberRange(min=0, max=1000000)])
+    bubble_nine = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                               validators=[NumberRange(min=0, max=1000000)])
+    bubble_fourteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                   validators=[NumberRange(min=0, max=1000000)])
+    puck_six = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                            validators=[NumberRange(min=0, max=1000000)])
+    puck_molex_six = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                  validators=[NumberRange(min=0, max=1000000)])
+    puck_nine = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                             validators=[NumberRange(min=0, max=1000000)])
+    long_nineteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                 validators=[NumberRange(min=0, max=1000000)])
+    short_nineteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                  validators=[NumberRange(min=0, max=1000000)])
+    green_nineteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                  validators=[NumberRange(min=0, max=1000000)])
+    ads_twentyfour = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                  validators=[NumberRange(min=0, max=1000000)])
+    ads_thirtysix = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                 validators=[NumberRange(min=0, max=1000000)])
     customer_id = SelectField('Customer', coerce=int)
     submit = SubmitField('Submit Order')
-    two_forty = BooleanField("Two Forty")
-    three_twenty = BooleanField("Three Twenty")
+    two_forty = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                             validators=[NumberRange(min=0, max=1000000)])
+    three_twenty = IntegerField(widget=widgets.Input(input_type='number'), default=0,
+                                validators=[NumberRange(min=0, max=1000000)])
     ride = StringField('Ride Name:')
 
 

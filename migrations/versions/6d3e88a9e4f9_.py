@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 1ed28ebb5dec
+Revision ID: 6d3e88a9e4f9
 Revises: 
-Create Date: 2018-12-11 15:49:45.158100
+Create Date: 2018-12-12 11:35:31.233558
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1ed28ebb5dec'
+revision = '6d3e88a9e4f9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,20 +41,21 @@ def upgrade():
     op.create_table('order',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('customer_id', sa.Integer(), nullable=True),
-    sa.Column('bubble_six', sa.Boolean(), nullable=True),
-    sa.Column('bubble_nine', sa.Boolean(), nullable=True),
-    sa.Column('bubble_fourteen', sa.Boolean(), nullable=True),
-    sa.Column('puck_six', sa.Boolean(), nullable=True),
-    sa.Column('puck_molex_six', sa.Boolean(), nullable=True),
-    sa.Column('puck_nine', sa.Boolean(), nullable=True),
-    sa.Column('long_nineteen', sa.Boolean(), nullable=True),
-    sa.Column('short_nineteen', sa.Boolean(), nullable=True),
-    sa.Column('green_nineteen', sa.Boolean(), nullable=True),
-    sa.Column('ads_twentyfour', sa.Boolean(), nullable=True),
-    sa.Column('ads_thirtysix', sa.Boolean(), nullable=True),
-    sa.Column('two_forty', sa.Boolean(), nullable=True),
-    sa.Column('three_twenty', sa.Boolean(), nullable=True),
+    sa.Column('bubble_six', sa.Integer(), nullable=False),
+    sa.Column('bubble_nine', sa.Integer(), nullable=False),
+    sa.Column('bubble_fourteen', sa.Integer(), nullable=False),
+    sa.Column('puck_six', sa.Integer(), nullable=False),
+    sa.Column('puck_molex_six', sa.Integer(), nullable=False),
+    sa.Column('puck_nine', sa.Integer(), nullable=False),
+    sa.Column('long_nineteen', sa.Integer(), nullable=False),
+    sa.Column('short_nineteen', sa.Integer(), nullable=False),
+    sa.Column('green_nineteen', sa.Integer(), nullable=False),
+    sa.Column('ads_twentyfour', sa.Integer(), nullable=False),
+    sa.Column('ads_thirtysix', sa.Integer(), nullable=False),
+    sa.Column('two_forty', sa.Integer(), nullable=False),
+    sa.Column('three_twenty', sa.Integer(), nullable=False),
     sa.Column('ride', sa.String(length=128), nullable=True),
+    sa.Column('date_created', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['customer_id'], ['customer.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -62,6 +63,20 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('order_id', sa.Integer(), nullable=True),
     sa.Column('customer_id', sa.Integer(), nullable=True),
+    sa.Column('t_one_thousand', sa.Integer(), nullable=True),
+    sa.Column('t_one_thousand_a', sa.Integer(), nullable=True),
+    sa.Column('ym_four', sa.Integer(), nullable=True),
+    sa.Column('ym_eight', sa.Integer(), nullable=True),
+    sa.Column('falcon_two', sa.Integer(), nullable=True),
+    sa.Column('falcon_four', sa.Integer(), nullable=True),
+    sa.Column('falcon_sixteen', sa.Integer(), nullable=True),
+    sa.Column('twentyfour_to_five', sa.Integer(), nullable=True),
+    sa.Column('twentyfour_to_twelve', sa.Integer(), nullable=True),
+    sa.Column('number_of_datas', sa.Integer(), nullable=True),
+    sa.Column('raspberry_pi', sa.Integer(), nullable=True),
+    sa.Column('tp_link', sa.Integer(), nullable=True),
+    sa.Column('spokes', sa.Integer(), nullable=True),
+    sa.Column('boxes', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['customer_id'], ['customer.id'], ),
     sa.ForeignKeyConstraint(['order_id'], ['order.id'], ),
     sa.PrimaryKeyConstraint('id')
