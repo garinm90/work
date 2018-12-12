@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, \
-    MultipleFileField, FileField, IntegerField, widgets
+    MultipleFileField, IntegerField, widgets
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo, NumberRange
-from app.models import User, Customer, Order
+from app.models import User, Customer
 
 
 class LoginForm(FlaskForm):
@@ -109,3 +109,23 @@ class QuoteForm(FlaskForm):
     # Power Supplies
     two_forty = IntegerField('240', widget=widgets.Input(input_type='number'), default=0)
     three_twenty = IntegerField('320', widget=widgets.Input(input_type='number'), default=0)
+
+
+class CreateControllerForm(FlaskForm):
+    order = SelectField('Order')
+    customer = SelectField('Customer')
+    t_one_thousand = StringField('T1000', default=0, validators=[DataRequired()])
+    t_one_thousand_a = StringField('T1000A', default=0, validators=[DataRequired()])
+    ym_four = StringField('YM-4', default=0, validators=[DataRequired()])
+    ym_eight = StringField('YM-8', default=0, validators=[DataRequired()])
+    falcon_two = StringField('F2', default=0, validators=[DataRequired()])
+    falcon_four = StringField('F4', default=0, validators=[DataRequired()])
+    falcon_sixteen = StringField('F16', default=0, validators=[DataRequired()])
+    twentyfour_to_five = StringField('24v to 5v', default=0, validators=[DataRequired()])
+    twentyfour_to_twelve = StringField('24v to 12v', default=0, validators=[DataRequired()])
+    number_of_datas = StringField('Data', default=0, validators=[DataRequired()])
+    raspberry_pi = StringField('Pies', default=0, validators=[DataRequired()])
+    tp_link = StringField('TP-Link', default=0, validators=[DataRequired()])
+    spokes = StringField('Spokes', default=0, validators=[DataRequired()])
+    boxes = TextAreaField('Boxes', default='Enter boxes used...', validators=[DataRequired()])
+    submit = SubmitField('Submit')
