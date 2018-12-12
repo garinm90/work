@@ -3,8 +3,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db, images
 from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm, \
-    QuoteForm
-from app.models import User, Customer, Order, Image
+    QuoteForm, CreateControllerForm
+from app.models import User, Customer, Order, Image, Controller
 
 
 @app.route('/')
@@ -222,3 +222,21 @@ def quote_two():
     form = QuoteForm()
     part_two = True
     return render_template('quote_first.html', form=form, part_two=part_two)
+
+
+@app.route('/create_controller', methods=['GET', 'POST'])
+@login_required
+def create_controller():
+    customers = Customer.query.all()
+    orders = Order.query.all()
+    form = CreateControllerForm()
+    form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
+    form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
+    controller = Controller()
+    if form.validate_on_submit():
+        form.populate_obj(controller)
+        db.session.add(controller)
+        db.session.commit()
+        flash('Successfully added controller!')
+        return redirect(url_for('index'))
+    return render_template('create_controller.html', form=form, title='Create Controller')
