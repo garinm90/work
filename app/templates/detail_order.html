@@ -2,86 +2,102 @@
 
 {% block app_content %}
 
-    <table class="table table-striped">
-        <thead>
+<table class="table table-striped">
+    <thead>
         <tr>
             <th>Order #</th>
             <th>Power Supply</th>
+            <th>Controller</th>
             <th>Lights</th>
+            <th>Date Created</th>
+            <th>Last Update</th>
         </tr>
-        </thead>
+    </thead>
 
-        <tr>
-            <td>{{ order.id }}</td>
-            {% if order.two_forty and order.three_twenty %}
-                <td>Both</td>
-            {% elif order.three_twenty %}
-                <td>320</td>
-            {% elif order.two_forty %}
-                <td>240</td>
-            {% endif %}
-            <td>
-                <ul>
-                    {% if order.bubble_six %}
-                        <li>Bubble 6</li>
-                    {% endif %}
-
-                    {% if order.bubble_nine %}
-                        <li>Bubble 9</li>
-                    {% endif %}
-
-                    {% if order.bubble_fourteen %}
-                        <li>Bubble 14</li>
-                    {% endif %}
-
-                    {% if order.puck_six %}
-                        <li>Puck 6</li>
-                    {% endif %}
-                    {% if order.puck_molex_six %}
-                        <li>Molex Puck 6</li>
-                    {% endif %}
-                    {% if order.puck_nine %}
-                        <li>Puck 9</li>
-                    {% endif %}
-                    {% if order.long_nineteen %}
-                        <li>Longwire 19</li>
-                    {% endif %}
-                    {% if order.short_nineteen %}
-                        <li>Short 19</li>
-                    {% endif %}
-                    {% if order.green_nineteen %}
-                        <li>Green 19</li>
-                    {% endif %}
-                    {% if order.ads_twentyfour %}
-                        <li>ADS 24</li>
-                    {% endif %}
-                    {% if order.ads_thirtysix %}
-                        <li>ADS 36</li>
-                    {% endif %}
-
-
-                </ul>
-            </td>
-        </tr>
-
-    </table>
-    <div class="row">
-
-        {% for image in order.image %}
-            <div class="col-md-4 col-lg-3 col-sm-6 col-xs-6">
-                <a href="{{ image_url(image.filename) }}"><img class="thumbnail" src="{{ image_url(image.filename) }}"
-                                                               alt=""></a>
-            </div>
+    <tr>
+        <td>{{ order.id }}</td>
+        {% if order.two_forty and order.three_twenty %}
+        <td>Both</td>
+        {% elif order.three_twenty %}
+        <td>320</td>
+        {% elif order.two_forty %}
+        <td>240</td>
+        {% endif %}
+        {% if order.controller %}
+        {% for controller in order.controller %}
+        <td> <a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}"> #{{ controller.controller_number }}</a></td>
         {% endfor %}
-    </div>
+        {% else %}
+        <td> <a href="{{ url_for('create_controller', order_id=order.id, customer_id=order.customer.id) }}">Add Controller</a></td>
+        {% endif %}
+        <td>
+            <ul class="list-unstyled">
+                {% if order.bubble_six %}
+                <li>Bubble 6</li>
+                {% endif %}
 
-    <br>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <a class="btn btn-primary btn-block" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
-            </div>
+                {% if order.bubble_nine %}
+                <li>Bubble 9</li>
+                {% endif %}
+
+                {% if order.bubble_fourteen %}
+                <li>Bubble 14</li>
+                {% endif %}
+
+                {% if order.puck_six %}
+                <li>Puck 6</li>
+                {% endif %}
+                {% if order.puck_molex_six %}
+                <li>Molex Puck 6</li>
+                {% endif %}
+                {% if order.puck_nine %}
+                <li>Puck 9</li>
+                {% endif %}
+                {% if order.long_nineteen %}
+                <li>Longwire 19</li>
+                {% endif %}
+                {% if order.short_nineteen %}
+                <li>Short 19</li>
+                {% endif %}
+                {% if order.green_nineteen %}
+                <li>Green 19</li>
+                {% endif %}
+                {% if order.ads_twentyfour %}
+                <li>ADS 24</li>
+                {% endif %}
+                {% if order.ads_thirtysix %}
+                <li>ADS 36</li>
+                {% endif %}
+
+
+            </ul>
+        </td>
+        <td>{{ order.date_created.strftime('%m-%d-%Y') }}</td>
+        {% if order.date_updated %}
+        <td>{{ order.date_updated.strftime('%m-%d-%Y') }}</td>
+        {% else %}
+        <td>No Updates</td>
+        {% endif %}
+    </tr>
+
+</table>
+<div class="row">
+
+    {% for image in order.image %}
+    <div class="col-md-4 col-lg-3 col-sm-6 col-xs-6">
+        <a href="{{ image_url(image.filename) }}"><img class="thumbnail" src="{{ image_url(image.filename) }}" alt=""></a>
+    </div>
+    {% endfor %}
+</div>
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <a class="btn btn-primary btn-block" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
         </div>
     </div>
+</div>
+
 
 {% endblock %}
