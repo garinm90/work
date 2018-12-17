@@ -86,6 +86,9 @@ class Controller(db.Model):
     tp_link = db.Column(db.Integer())
     spokes = db.Column(db.Integer())
     boxes = db.Column(db.String())
+    phoenix_one_by_one = db.Column(db.Integer())
+    phoenix_one_by_two = db.Column(db.Integer())
+    phoenix_two_by_two = db.Column(db.Integer())
 
 
 class Image(db.Model):
