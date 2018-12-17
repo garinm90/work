@@ -253,6 +253,22 @@ def detail_controller(controller_number):
     controller = Controller.query.filter_by(controller_number=controller_number).first()
     return render_template('detail_controller.html', controller=controller, image_url=images.url)
 
+@app.route('/controller/<controller_number>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_controller(controller_number):
+    controller = Controller.query.filter_by(controller_number=controller_number).first()
+    customers = Customer.query.all()
+    orders = Order.query.all()
+    form = CreateControllerForm(obj=controller)
+    form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
+    form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
+    if form.validate_on_submit():
+        form.populate_obj(controller)
+        db.session.commit()
+        flash('Updated!')
+        return redirect(url_for('detail_controller', controller_number=controller.controller_number))
+    return render_template('create_controller.html', form=form)
+
 @app.route('/controllers')
 @login_required
 def list_controllers():
