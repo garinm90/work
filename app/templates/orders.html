@@ -3,6 +3,7 @@
 
 {% block app_content %}
     <h1>{{ title }}:</h1>
+    <a class="btn btn-primary" href="{{ url_for('create_order', customer_id=customer_id) }}">New Order</a>
     <table class="table table-striped">
         <thead>
         <tr>
