@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<table class="table">
+<thead>
+    <tr>
+        <th>Controller #</th>
+        <th>Customer</th>
+        <th>Ride</th>
+        <th>Date Created</th>
+        <th>Last Update</th>
+    </tr>
+</thead>
+<tbody>
+        {% for controller in controllers %}
+        <tr>
+<td>
+{{ controller.controller_number }}
+</td>
+<td>
+    {{controller.customer}}
+</td>
+<td>
+    {{controller.order.ride}}
+</td>
+<td>
+    {{ controller.date_created.strftime('%m-%d-%Y') }}
+</td>
+{% if controller.date_updated %}
+<td>
+    {{ controller.date_updated.strftime('%m-%d-%Y') }}
+</td>
+{% else %}
+<td>No Updates!</td>
+{% endif %}
+        </tr>
+        {% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+{% endblock %}
