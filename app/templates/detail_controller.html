@@ -6,9 +6,12 @@
     <div class="text-center">
         <h3>
             {{ controller.customer }}'s
-            {{ controller.order.ride.capitalize() }}
+            {{ controller.order.ride.capitalize() }} Controller #{{ controller.controller_number }}
         </h3>
+        <h4>Created On: {{ controller.date_created.strftime('%m-%d-%Y') }}</h4>
+        <h4>Last Update: {{ controller.date_updated }}</h4>
     </div>
+    <hr>
     <div class="row">
         <div class="col-lg-3">
             {% if controller.t_one_thousand %}
@@ -32,7 +35,7 @@
         </div>
 
     </div>
-<hr>
+    <hr>
     <div class="row">
         <div class="col-lg-3">
             {% if controller.falcon_two %}
@@ -56,59 +59,67 @@
         </div>
     </div>
     <hr>
-<div class="row">
-    <div class="col-lg-3">
-    {% if controller.tp_link %}
-    TP_Link: {{ controller.tp_link }}
-    {% endif %}</div>
-    <div class="col-lg-3">
-    {% if controller.twentyfour_to_five %}
-    24v to 5v: {{ controller.twentyfour_to_five }}
-    {% endif %}
-</div>
-<div class="col-lg-3">
-    {% if controller.twentyfour_to_twelve %}
-    24v to 12v: {{ controller.twentyfour_to_twelve }}
-    {% endif %}
-</div>
+    <div class="row">
+        <div class="col-lg-3">
+            {% if controller.tp_link %}
+            TP_Link: {{ controller.tp_link }}
+            {% endif %}</div>
+        <div class="col-lg-3">
+            {% if controller.twentyfour_to_five %}
+            24v to 5v: {{ controller.twentyfour_to_five }}
+            {% endif %}
+        </div>
+        <div class="col-lg-3">
+            {% if controller.twentyfour_to_twelve %}
+            24v to 12v: {{ controller.twentyfour_to_twelve }}
+            {% endif %}
+        </div>
 
-</div>
-<hr>
+    </div>
+    <hr>
 
 
-<div class="row">
-    <div class="col-lg-3">
-    {% if controller.number_of_datas %}
-    Datas: {{ controller.number_of_datas }}
-    {% endif %}
-</div>
-<div class="col-lg-3">
-    {% if controller.spokes %}
-    Spokes: {{ controller.spokes }}
-    {% endif %}
-</div>
-    <div class="col-lg-2">
-    {% if controller.phoenix_one_by_one %}
-    Phoenix 1x1: {{ controller.phoenix_one_by_one }}
-    {% endif %}
-</div>
-<div class="col-lg-2">
-    {% if controller.phoenix_one_by_two %}
-    Phoenix 1x2: {{ controller.phoenix_one_by_two }}
-    {% endif %}
-</div>
-<div class="col-lg-2">
-    {% if controller.phoenix_two_by_two %}
-    Phoenix 2x2: {{ controller.phoenix_two_by_two }}
-    {% endif %}
-</div>
-</div>
-<hr>
-<div class="row">
-    <div class="col-lg-12">
-{% if controller.boxes %}
-Box Info: {{ controller.boxes }}
-{% endif %}
-</div>
-</div>
-{% endblock %}
+    <div class="row">
+        <div class="col-lg-3">
+            {% if controller.number_of_datas %}
+            Datas: {{ controller.number_of_datas }}
+            {% endif %}
+        </div>
+        <div class="col-lg-3">
+            {% if controller.spokes %}
+            Spokes: {{ controller.spokes }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.phoenix_one_by_one %}
+            Phoenix 1x1: {{ controller.phoenix_one_by_one }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.phoenix_one_by_two %}
+            Phoenix 1x2: {{ controller.phoenix_one_by_two }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.phoenix_two_by_two %}
+            Phoenix 2x2: {{ controller.phoenix_two_by_two }}
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            {% if controller.boxes %}
+            Box Info: {{ controller.boxes }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        {% for image in controller.order.image %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <img class="thumbnail" src="{{ image_url(image.filename) }}" alt="">
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
