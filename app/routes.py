@@ -168,7 +168,7 @@ def customer_orders(customer_id):
         for image in order.image:
             url = images.url(image.filename)
             print(url)
-    return render_template('orders.html', orders=orders, title=f'Order List for {customer.name.title()}')
+    return render_template('orders.html', orders=orders, title=f'Order List for {customer.name.title()}', customer_id=customer_id)
 
 
 @app.route('/orders')
@@ -229,7 +229,9 @@ def quote_two():
 def create_controller():
     customers = Customer.query.all()
     orders = Order.query.all()
-    form = CreateControllerForm()
+    order_id = request.args.get('order_id', 1)
+    customer_id = request.args.get('customer_id', 1)
+    form = CreateControllerForm(order=order_id, customer=customer_id)
     form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
     form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
     controller = Controller()
@@ -249,4 +251,10 @@ def create_controller():
 @login_required
 def detail_controller(controller_number):
     controller = Controller.query.filter_by(controller_number=controller_number).first()
-    return render_template('detail_controller.html', controller=controller)
+    return render_template('detail_controller.html', controller=controller, image_url=images.url)
+
+@app.route('/controllers')
+@login_required
+def list_controllers():
+    controllers = Controller.query.all()
+    return render_template('list_controllers.html', controllers=controllers)
