@@ -60,16 +60,20 @@ class Order(db.Model):
     two_forty = db.Column(db.Integer(), nullable=False)
     three_twenty = db.Column(db.Integer(), nullable=False)
     image = db.relationship('Image', backref='order', lazy=True, cascade='delete,all')
-    controller = db.relationship('Controller', backref='controller', lazy=True, cascade='delete,all')
+    controller = db.relationship('Controller', backref='order', lazy=True, cascade='delete,all')
     ride = db.Column(db.String(128), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     def set_lower(self):
         self.ride = self.ride.lower()
+        
+    def __repr__(self):
+        return f'Order Number {self.id}'
 
 
 class Controller(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    controller_number = db.Column(db.Integer())
     order_id = db.Column(db.Integer(), db.ForeignKey('order.id'))
     customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
     t_one_thousand = db.Column(db.Integer())

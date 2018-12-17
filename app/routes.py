@@ -231,12 +231,22 @@ def create_controller():
     orders = Order.query.all()
     form = CreateControllerForm()
     form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
-    form.order.choices = [(o.id, '{} Order #{} for {}'.format(o.ride.capitalize(), o.id, o.customer)) for o in orders]
+    form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
     controller = Controller()
     if form.validate_on_submit():
-        form.populate_obj(controller)
+        controller = Controller(controller_number=form.controller_number.data, order_id=form.order.data, customer_id=form.customer.data,
+        t_one_thousand=form.t_one_thousand.data, t_one_thousand_a=form.t_one_thousand_a.data, ym_four=form.ym_four.data, ym_eight=form.ym_eight.data,
+        falcon_two=form.falcon_two.data, falcon_four=form.falcon_four.data, falcon_sixteen=form.falcon_sixteen.data, twentyfour_to_five=form.twentyfour_to_five.data,
+        twentyfour_to_twelve=form.twentyfour_to_twelve.data, number_of_datas=form.number_of_datas.data, raspberry_pi=form.raspberry_pi.data, tp_link=form.tp_link.data,
+        spokes=form.spokes.data, boxes=form.boxes.data, phoenix_one_by_one=form.phoenix_one_by_one.data, phoenix_one_by_two=form.phoenix_one_by_two.data, phoenix_two_by_two=form.phoenix_two_by_two.data)
         db.session.add(controller)
         db.session.commit()
         flash('Successfully added controller!')
-        return redirect(url_for('index'))
+        return redirect(url_for('detail_controller', controller_number=controller.controller_number))
     return render_template('create_controller.html', form=form, title='Create Controller')
+
+@app.route('/controller/<controller_number>')
+@login_required
+def detail_controller(controller_number):
+    controller = Controller.query.filter_by(controller_number=controller_number).first()
+    return render_template('detail_controller.html', controller=controller)

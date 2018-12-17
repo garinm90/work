@@ -112,8 +112,8 @@ class QuoteForm(FlaskForm):
 
 
 class CreateControllerForm(FlaskForm):
-    order = SelectField('')
-    customer = SelectField('Customer')
+    order = SelectField('Order', coerce=int)
+    customer = SelectField('Customer', coerce=int)
     t_one_thousand = StringField('T1000', default=0, validators=[DataRequired()])
     t_one_thousand_a = StringField('T1000A', default=0, validators=[DataRequired()])
     ym_four = StringField('YM-4', default=0, validators=[DataRequired()])
@@ -131,4 +131,5 @@ class CreateControllerForm(FlaskForm):
     phoenix_one_by_one = StringField('Phoenix 1x1', default=0, validators=[DataRequired()])
     phoenix_one_by_two = StringField('Phoenix 1x2', default=0, validators=[DataRequired()])
     phoenix_two_by_two = StringField('Phoenix 2x2', default=0, validators=[DataRequired()])
+    controller_number = StringField('', default=0, validators=[DataRequired()])
     submit = SubmitField('Submit')

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<div class="row">
+    <div class="text-center">
+        <h3>
+            {{ controller.customer }}'s
+            {{ controller.order.ride.capitalize() }}
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            {% if controller.t_one_thousand %}
+            T1000: {{ controller.t_one_thousand }}
+            {% endif %}
+        </div>
+        <div class="col-lg-3">
+            {% if controller.t_one_thousand_a %}
+            T1000A: {{ controller.t_one_thousand_a }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.ym_four %}
+            YM4: {{ controller.ym_four }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.ym_eight %}
+            YM8: {{ controller.ym_eight }}
+            {% endif %}
+        </div>
+
+    </div>
+<hr>
+    <div class="row">
+        <div class="col-lg-3">
+            {% if controller.falcon_two %}
+            F2: {{ controller.falcon_two }}
+            {% endif %}
+        </div>
+        <div class="col-lg-3">
+            {% if controller.falcon_four %}
+            F4: {{ controller.falcon_four }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.falcon_sixteen %}
+            F16: {{ controller.falcon_sixteen }}
+            {% endif %}
+        </div>
+        <div class="col-lg-2">
+            {% if controller.raspberry_pi %}
+            Raspberry: {{ controller.raspberry_pi }}
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+<div class="row">
+    <div class="col-lg-3">
+    {% if controller.tp_link %}
+    TP_Link: {{ controller.tp_link }}
+    {% endif %}</div>
+    <div class="col-lg-3">
+    {% if controller.twentyfour_to_five %}
+    24v to 5v: {{ controller.twentyfour_to_five }}
+    {% endif %}
+</div>
+<div class="col-lg-3">
+    {% if controller.twentyfour_to_twelve %}
+    24v to 12v: {{ controller.twentyfour_to_twelve }}
+    {% endif %}
+</div>
+
+</div>
+<hr>
+
+
+<div class="row">
+    <div class="col-lg-3">
+    {% if controller.number_of_datas %}
+    Datas: {{ controller.number_of_datas }}
+    {% endif %}
+</div>
+<div class="col-lg-3">
+    {% if controller.spokes %}
+    Spokes: {{ controller.spokes }}
+    {% endif %}
+</div>
+    <div class="col-lg-2">
+    {% if controller.phoenix_one_by_one %}
+    Phoenix 1x1: {{ controller.phoenix_one_by_one }}
+    {% endif %}
+</div>
+<div class="col-lg-2">
+    {% if controller.phoenix_one_by_two %}
+    Phoenix 1x2: {{ controller.phoenix_one_by_two }}
+    {% endif %}
+</div>
+<div class="col-lg-2">
+    {% if controller.phoenix_two_by_two %}
+    Phoenix 2x2: {{ controller.phoenix_two_by_two }}
+    {% endif %}
+</div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-12">
+{% if controller.boxes %}
+Box Info: {{ controller.boxes }}
+{% endif %}
+</div>
+</div>
+{% endblock %}
