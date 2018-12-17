@@ -63,6 +63,7 @@ class Order(db.Model):
     controller = db.relationship('Controller', backref='order', lazy=True, cascade='delete,all')
     ride = db.Column(db.String(128), nullable=True)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    date_updated = db.Column(db.DateTime, onupdate=datetime.now)
 
     def set_lower(self):
         self.ride = self.ride.lower()
@@ -93,6 +94,8 @@ class Controller(db.Model):
     phoenix_one_by_one = db.Column(db.Integer())
     phoenix_one_by_two = db.Column(db.Integer())
     phoenix_two_by_two = db.Column(db.Integer())
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    date_updated = db.Column(db.DateTime, onupdate=datetime.now)
 
 
 class Image(db.Model):
