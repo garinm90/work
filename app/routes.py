@@ -231,7 +231,7 @@ def create_controller():
     orders = Order.query.all()
     form = CreateControllerForm()
     form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
-    form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
+    form.order.choices = [(o.id, '{} Order #{} for {}'.format(o.ride.capitalize(), o.id, o.customer)) for o in orders]
     controller = Controller()
     if form.validate_on_submit():
         form.populate_obj(controller)
