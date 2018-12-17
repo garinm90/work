@@ -8,10 +8,10 @@
             <th>Order #</th>
             <th>List</th>
             <th>Ride</th>
+            <th>Controller</th>
             <th>Date Created</th>
             <th>Upload</th>
             <th></th>
-            <th>Controller</th>
         </tr>
         <tbody>
         {% for order in orders %}
@@ -29,15 +29,16 @@
                     None on file!
                 {% endif %}
                 </td>
+                {% for controller in order.controller%}
+                <td><a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}">#{{ controller.controller_number }}</a></td>
+                {% endfor %}
                 <td>
                     {{ order.date_created.strftime('%m-%d-%Y') }}
                 </td>
                 <td><a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add
                     Images</a></td>
                 <td><a class="btn-primary btn" href="{{ url_for('edit_order', number=order.id) }}">Edit Order</a></td>
-                {% for controller in order.controller%}
-                <td><a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}">#{{ controller.controller_number }}</a></td>
-                {% endfor %}
+                
             </tr>
         {% endfor %}
 
