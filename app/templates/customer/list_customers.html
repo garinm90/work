@@ -4,7 +4,7 @@
 {% block app_content %}
     <div class="row">
         <div class="col-lg-offset-4 col-lg-2">
-            <a class="btn btn-primary btn-block" href="{{ url_for('create_customer') }}">New Customer</a></a>
+            <a class="btn btn-primary btn-block" href="{{ url_for('customer.create_customer') }}">New Customer</a></a>
         </div>
     </div>
     <table class="table">
@@ -20,15 +20,15 @@
         {% for customer in customers %}
             <tr>
                 <td>
-                    <a href="{{ url_for('detail_customer', number=customer.id) }}">{{ customer.name.title() }}</a>
+                    <a href="{{ url_for('customer.detail_customer', number=customer.id) }}">{{ customer.name.title() }}</a>
                 </td>
                 <td><a class="btn btn-default"
                        href="{{ url_for('customer_orders', customer_id=customer.id) }}">Orders</a></td>
                 <td><a class="btn btn-primary" href="{{ url_for('create_order', customer_id=customer.id) }}">New
                     Order</a></td>
-                <td><a class="btn btn-info" href="{{ url_for('edit_customer', number=customer.id) }}">Edit Customer</a>
+                <td><a class="btn btn-info" href="{{ url_for('customer.edit_customer', number=customer.id) }}">Edit Customer</a>
                 </td>
-                <td><a class="btn btn-danger" href="{{ url_for('delete_customer', number=customer.id) }}">Delete</a>
+                <td><a class="btn btn-danger" href="{{ url_for('customer.delete_customer', number=customer.id) }}">Delete</a>
                 </td>
             </tr>
         {% endfor %}
