@@ -1,10 +1,34 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app, session
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_principal import identity_loaded, RoleNeed, UserNeed, Permission, identity_changed, Identity, AnonymousIdentity, RoleNeed
 from werkzeug.urls import url_parse
 from app import app, db, images
 from app.forms import LoginForm, RegistrationForm, CreateCustomerForm, DeleteForm, CreateOrderForm, ImageUploadForm, \
     QuoteForm, CreateControllerForm
 from app.models import User, Customer, Order, Image, Controller
+
+admin_permission = Permission(RoleNeed('admin'))
+
+@app.errorhandler(403)
+def page_not_found(e):
+    flash(f'403 Forbidden {request.url}')
+    session['redirected_from'] = request.url
+    return redirect(url_for('index'))
+
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    # Set the identity user object
+    identity.user = current_user
+
+    # Add the UserNeed to the identity
+    if hasattr(current_user, 'id'):
+        identity.provides.add(UserNeed(current_user.id))
+
+    # Assuming the User model has a list of roles, update the
+    # identity with the roles that the user provides
+    if hasattr(current_user, 'roles'):
+        for role in current_user.roles:
+            identity.provides.add(RoleNeed(role.name))
 
 
 @app.route('/')
@@ -25,6 +49,8 @@ def login():
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
+        identity_changed.send(current_app._get_current_object(),
+                                  identity=Identity(user.id))
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -35,6 +61,10 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+    identity_changed.send(current_app._get_current_object(),
+                          identity=AnonymousIdentity())
     return redirect(url_for('index'))
 
 
@@ -55,6 +85,7 @@ def register():
 
 @app.route('/customers')
 @login_required
+@admin_permission.require(http_exception=403)
 def customers():
     customers = Customer.query.all()
     return render_template('list_customers.html', title='Customer List', customers=customers)
