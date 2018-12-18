@@ -142,8 +142,8 @@ def edit_order(number):
         form.populate_obj(order)
         order.set_lower()
         db.session.commit()
-        flash(f'Updated {order.customer_id}')
-        return redirect(url_for('index'))
+        flash(f'Updated order #{order.id} for {order.customer}')
+        return redirect(url_for('detail_order', number=order.id))
     return render_template('create_order.html', form=form, title=f'Edit Order for {order.customer}')
 
 
@@ -151,11 +151,6 @@ def edit_order(number):
 @login_required
 def detail_order(number):
     order = Order.query.get(number)
-    keys = []
-    for key, value in order.__dict__.items():
-        print(key, value)
-        if value == True:
-            keys.append(key)
     return render_template('detail_order.html', order=order, image_url=images.url)
 
 
@@ -192,7 +187,7 @@ def upload():
             db.session.add(i)
             db.session.commit()
         flash('Uploaded!')
-        return redirect(url_for('view_images', order_id=form.order.data))
+        return redirect(url_for('detail_order', number=order_id))
     return render_template('upload.html', form=form, order_information=order_information)
 
 
@@ -232,8 +227,8 @@ def create_controller():
     order_id = request.args.get('order_id', 1)
     customer_id = request.args.get('customer_id', 1)
     form = CreateControllerForm(order=order_id, customer=customer_id)
-    form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
-    form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
+    form.customer_id.choices = [(c.id, '{}'.format(c)) for c in customers]
+    form.order_id.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
     controller = Controller()
     if form.validate_on_submit():
         controller = Controller(controller_number=form.controller_number.data, order_id=form.order.data, customer_id=form.customer.data,
@@ -260,12 +255,12 @@ def edit_controller(controller_number):
     customers = Customer.query.all()
     orders = Order.query.all()
     form = CreateControllerForm(obj=controller)
-    form.customer.choices = [(c.id, '{}'.format(c)) for c in customers]
-    form.order.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
+    form.customer_id.choices = [(c.id, '{}'.format(c)) for c in customers]
+    form.order_id.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
     if form.validate_on_submit():
         form.populate_obj(controller)
         db.session.commit()
-        flash('Updated!')
+        flash(f'Updated controller #{controller.controller_number} for {controller.customer}')
         return redirect(url_for('detail_controller', controller_number=controller.controller_number))
     return render_template('create_controller.html', form=form)
 
