@@ -13,9 +13,22 @@ bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'main.login'
 images = UploadSet('images', IMAGES)
 configure_uploads(app, images)
 principals = Principal(app)
+
+
+from app.main import bp as main_bp
+app.register_blueprint(main_bp)
+
+from app.customer import bp as customer_bp
+app.register_blueprint(customer_bp)
+
+from app.order import bp as order_bp
+app.register_blueprint(order_bp)
+
+from app.controller import bp as controller_bp
+app.register_blueprint(controller_bp)
 
 from app import routes, models

@@ -25,10 +25,10 @@
         {% endif %}
         {% if order.controller %}
         {% for controller in order.controller %}
-        <td> <a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}"> #{{ controller.controller_number }}</a></td>
+        <td> <a href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}"> #{{ controller.controller_number }}</a></td>
         {% endfor %}
         {% else %}
-        <td> <a href="{{ url_for('create_controller', order_id=order.id, customer_id=order.customer.id) }}">Add Controller</a></td>
+        <td> <a href="{{ url_for('controller.create_controller', order_id=order.id, customer_id=order.customer.id) }}">Add Controller</a></td>
         {% endif %}
         <td>
             <ul class="list-unstyled">

@@ -17,7 +17,7 @@
         {% for controller in controllers %}
         <tr>
 <td>
-<a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}">{{ controller.controller_number }}</a>
+<a href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}">{{ controller.controller_number }}</a>
 </td>
 <td>
     {{controller.customer}}
@@ -35,7 +35,7 @@
 {% else %}
 <td>No Updates!</td>
 {% endif %}
-<td><a class="btn btn-info" href="{{ url_for('edit_controller', controller_number=controller.controller_number) }}">Edit</a></td>
+<td><a class="btn btn-info" href="{{ url_for('controller.edit_controller', controller_number=controller.controller_number) }}">Edit</a></td>
         </tr>
         {% endfor %}
 
