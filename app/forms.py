@@ -7,59 +7,7 @@ from app.models import User, Customer
 
 
 
-class CreateCustomerForm(FlaskForm):
-    name = StringField('Customer name', validators=[DataRequired()])
-    email = StringField('Email', validators=[Email()])
-    company = StringField('Company name')
-    phone = StringField('Phone number')
-    address = TextAreaField()
-    submit = SubmitField('Create Customer')
 
-    def __init__(self, original_email, *args, **kwargs):
-        super(CreateCustomerForm, self).__init__(*args, **kwargs)
-        self.original_email = original_email
-
-    def validate_email(self, email):
-        if email.data != self.original_email:
-            customer = Customer.query.filter_by(email=self.email.data).first()
-            if customer is not None:
-                raise ValidationError('Please use a different email address.')
-
-
-class DeleteForm(FlaskForm):
-    delete = SubmitField('Delete')
-
-
-class CreateOrderForm(FlaskForm):
-    bubble_six = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                              validators=[NumberRange(min=0, max=1000000)])
-    bubble_nine = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                               validators=[NumberRange(min=0, max=1000000)])
-    bubble_fourteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                   validators=[NumberRange(min=0, max=1000000)])
-    puck_six = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                            validators=[NumberRange(min=0, max=1000000)])
-    puck_molex_six = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                  validators=[NumberRange(min=0, max=1000000)])
-    puck_nine = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                             validators=[NumberRange(min=0, max=1000000)])
-    long_nineteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                 validators=[NumberRange(min=0, max=1000000)])
-    short_nineteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                  validators=[NumberRange(min=0, max=1000000)])
-    green_nineteen = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                  validators=[NumberRange(min=0, max=1000000)])
-    ads_twentyfour = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                  validators=[NumberRange(min=0, max=1000000)])
-    ads_thirtysix = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                 validators=[NumberRange(min=0, max=1000000)])
-    customer_id = SelectField('Customer', coerce=int)
-    submit = SubmitField('Submit Order')
-    two_forty = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                             validators=[NumberRange(min=0, max=1000000)])
-    three_twenty = IntegerField(widget=widgets.Input(input_type='number'), default=0,
-                                validators=[NumberRange(min=0, max=1000000)])
-    ride = StringField('Ride Name:')
 
 
 class ImageUploadForm(FlaskForm):

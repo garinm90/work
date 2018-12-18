@@ -17,10 +17,10 @@
         {% for order in orders %}
             <tr>
                 <td>
-                    <a href="{{ url_for('detail_order', number=order.id) }}">{{ order.id }} Details-Images</a>
+                    <a href="{{ url_for('order.detail_order', number=order.id) }}">{{ order.id }} Details-Images</a>
                 </td>
                 <td>
-                    <a href="{{ url_for('customer_orders', customer_id=order.customer.id) }}">{{ order.customer.name.title() }}'s
+                    <a href="{{ url_for('order.customer_orders', customer_id=order.customer.id) }}">{{ order.customer.name.title() }}'s
                         Orders</a>
                 </td>
                 <td>{% if order.ride %}
@@ -29,15 +29,19 @@
                     None on file!
                 {% endif %}
                 </td>
+                {% if order.controller %}
                 {% for controller in order.controller%}
                 <td><a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}">#{{ controller.controller_number }}</a></td>
                 {% endfor %}
+                {% else %}
+                <td>None!</td>
+                {% endif %}
                 <td>
                     {{ order.date_created.strftime('%m-%d-%Y') }}
                 </td>
                 <td><a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add
                     Images</a></td>
-                <td><a class="btn-primary btn" href="{{ url_for('edit_order', number=order.id) }}">Edit Order</a></td>
+                <td><a class="btn-primary btn" href="{{ url_for('order.edit_order', number=order.id) }}">Edit Order</a></td>
                 
             </tr>
         {% endfor %}

@@ -25,4 +25,7 @@ app.register_blueprint(main_bp)
 from app.customer import bp as customer_bp
 app.register_blueprint(customer_bp)
 
+from app.order import bp as order_bp
+app.register_blueprint(order_bp)
+
 from app import routes, models
