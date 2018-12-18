@@ -31,7 +31,7 @@
                 </td>
                 {% if order.controller %}
                 {% for controller in order.controller%}
-                <td><a href="{{ url_for('detail_controller', controller_number=controller.controller_number) }}">#{{ controller.controller_number }}</a></td>
+                <td><a href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}">#{{ controller.controller_number }}</a></td>
                 {% endfor %}
                 {% else %}
                 <td>None!</td>

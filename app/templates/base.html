@@ -27,7 +27,7 @@
                     <li><a href="{{ url_for('main.index') }}">Home</a></li>
                     <li><a href="{{ url_for('customer.customers') }}">Customers</a></li>
                     <li><a href="{{ url_for('order.list_orders') }}">Orders</a></li>
-                    <li><a href="{{ url_for('list_controllers') }}">Controllers</a></li>
+                    <li><a href="{{ url_for('controller.list_controllers') }}">Controllers</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     {% if current_user.is_anonymous %}
