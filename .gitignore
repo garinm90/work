@@ -111,3 +111,4 @@ venv.bak/
 .idea/modules.xml
 .idea/work.iml
 .idea/workspace.xml
+app/static/images/
