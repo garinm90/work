@@ -112,8 +112,8 @@ class QuoteForm(FlaskForm):
 
 
 class CreateControllerForm(FlaskForm):
-    order = SelectField('Order', coerce=int)
-    customer = SelectField('Customer', coerce=int)
+    order_id = SelectField('Order', coerce=int)
+    customer_id = SelectField('Customer', coerce=int)
     t_one_thousand = StringField('T1000', default=0, validators=[DataRequired()])
     t_one_thousand_a = StringField('T1000A', default=0, validators=[DataRequired()])
     ym_four = StringField('YM-4', default=0, validators=[DataRequired()])
