@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+{{ wtf.quick_form(form) }}
+
+{% if total_two_forty %}
+<br>
+240s = {{ total_two_forty }}
+{% endif %}
+
+{% endblock %}
