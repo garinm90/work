@@ -2,72 +2,99 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>{{ title }}:</h1>
-    <a class="btn btn-primary" href="{{ url_for('order.create_order', customer_id=customer_id) }}">New Order</a>
-    <table class="table table-striped">
-        <thead>
+<h1>{{ title }}:</h1>
+<a class="btn btn-primary" href="{{ url_for('order.create_order', customer_id=customer_id) }}">New Order</a>
+<table class="table table-striped">
+    <thead>
         <tr>
-            <th>Order #</th>
+            <th>Job #</th>
             <th>Ride</th>
             <th>Power Supply</th>
             <th>Lights</th>
+            <th>Controller</th>
+            <th>Upload</th>
         </tr>
-        </thead>
-        {% for order in orders %}
-            <tr>
-                <td><a href="{{ url_for('order.detail_order', number=order.id) }}">{{ order.id }} Details</a></td>
-                <td>{{ order.ride.capitalize() }}</td>
-                {% if order.two_forty and order.three_twenty %}
-                    <td>Both</td>
-                {% elif order.three_twenty %}
-                    <td>320</td>
-                {% elif order.two_forty %}
-                    <td>240</td>
+    </thead>
+    {% for order in orders %}
+    <tr>
+        <td><a href="{{ url_for('order.detail_order', number=order.id) }}">{{ order.id }} Details</a></td>
+        <td>{{ order.ride.capitalize() }}</td>
+        <td>
+            {% if order.two_forty and order.three_twenty %}
+            320/240
+            {% elif order.three_twenty %}
+            320
+            {% elif order.two_forty %}
+            240
+            {% endif %}
+        </td>
+
+        <td>
+            <ul>
+                {% if order.bubble_six %}
+                <li>Bubble 6</li>
                 {% endif %}
-                <td>
-                    <ul>
-                        {% if order.bubble_six %}
-                            <li>Bubble 6</li>
-                        {% endif %}
 
-                        {% if order.bubble_nine %}
-                            <li>Bubble 9</li>
-                        {% endif %}
+                {% if order.bubble_nine %}
+                <li>Bubble 9</li>
+                {% endif %}
 
-                        {% if order.bubble_fourteen %}
-                            <li>Bubble 14</li>
-                        {% endif %}
+                {% if order.bubble_fourteen %}
+                <li>Bubble 14</li>
+                {% endif %}
 
-                        {% if order.puck_six %}
-                            <li>Puck 6</li>
-                        {% endif %}
-                        {% if order.puck_molex_six %}
-                            <li>Molex Puck 6</li>
-                        {% endif %}
-                        {% if order.puck_nine %}
-                            <li>Puck 9</li>
-                        {% endif %}
-                        {% if order.long_nineteen %}
-                            <li>Longwire 19</li>
-                        {% endif %}
-                        {% if order.short_nineteen %}
-                            <li>Short 19</li>
-                        {% endif %}
-                        {% if order.green_nineteen %}
-                            <li>Green 19</li>
-                        {% endif %}
-                        {% if order.ads_twentyfour %}
-                            <li>ADS 24</li>
-                        {% endif %}
-                        {% if order.ads_thirtysix %}
-                            <li>ADS 36</li>
-                        {% endif %}
+                {% if order.puck_six %}
+                <li>Puck 6</li>
+                {% endif %}
+                {% if order.puck_molex_six %}
+                <li>Molex Puck 6</li>
+                {% endif %}
+                {% if order.puck_nine %}
+                <li>Puck 9</li>
+                {% endif %}
+                {% if order.long_nineteen %}
+                <li>Longwire 19</li>
+                {% endif %}
+                {% if order.short_nineteen %}
+                <li>Short 19</li>
+                {% endif %}
+                {% if order.green_nineteen %}
+                <li>Green 19</li>
+                {% endif %}
+                {% if order.ads_twentyfour %}
+                <li>ADS 24</li>
+                {% endif %}
+                {% if order.ads_thirtysix %}
+                <li>ADS 36</li>
+                {% endif %}
 
 
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+            </ul>
+        </td>
+        
+        <td>
+                {% if order.controller %}
+                {% for controller in order.controller %}
+                <a href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}">  #{{ controller.controller_number }}</a> 
+                {% endfor %}
+                {% else %}
+                <a href="{{ url_for('controller.create_controller', order_id=order.id, customer_id=order.customer.id) }}">Add Controller</a>
+                {% endif %}
+        </td>
+
+        <td>
+            <div class="row">
+            <a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
+            <a class="btn btn-primary" href="#">Add CAD</a>
+        </div>
+        <br>
+        <div class="row">
+            <a class="btn btn-primary" href="#">Add Graphics</a>
+            <a class="btn btn-primary" href="#">Add Wiring</a>
+        </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 {% endblock %}
