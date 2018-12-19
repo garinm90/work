@@ -2,6 +2,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
 {% endblock %}
 
 
@@ -26,7 +27,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}">Home</a></li>
                     <li><a href="{{ url_for('customer.customers') }}">Customers</a></li>
-                    <li><a href="{{ url_for('order.list_orders') }}">Orders</a></li>
+                    <li><a href="{{ url_for('order.list_orders') }}">Jobs</a></li>
                     <li><a href="{{ url_for('controller.list_controllers') }}">Controllers</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -55,3 +56,11 @@
         {% block app_content %}{% endblock %}
     </div>
 {% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}
+
