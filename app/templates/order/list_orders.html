@@ -2,26 +2,26 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <table class="table">
+    <table id="order_table" class="table table-striped table-bordered">
         <thead>
         <tr>
-            <th>Order #</th>
+            <th>Job #</th>
             <th>List</th>
             <th>Ride</th>
             <th>Controller</th>
             <th>Date Created</th>
             <th>Upload</th>
-            <th></th>
+            <th>Edit</th>
         </tr>
         <tbody>
         {% for order in orders %}
             <tr>
                 <td>
-                    <a href="{{ url_for('order.detail_order', number=order.id) }}">{{ order.id }} Details-Images</a>
+                    <a href="{{ url_for('order.detail_order', number=order.id) }}">Job {{ order.id }} Details</a>
                 </td>
                 <td>
                     <a href="{{ url_for('order.customer_orders', customer_id=order.customer.id) }}">{{ order.customer.name.title() }}'s
-                        Orders</a>
+                        Jobs</a>
                 </td>
                 <td>{% if order.ride %}
                     {{ order.ride.capitalize() }}

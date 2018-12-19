@@ -10,9 +10,9 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Customer</th>
-            <th>List Customer Orders</th>
-            <th>Create Customer Order</th>
+            <th>Contact</th>
+            <th>List Customer's Jobs</th>
+            <th>Create Job</th>
             <th>Edit Customer</th>
             <th>Delete Customer</th>
         </tr>
@@ -20,12 +20,12 @@
         {% for customer in customers %}
             <tr>
                 <td>
-                    <a href="{{ url_for('customer.detail_customer', number=customer.id) }}">{{ customer.name.title() }}</a>
+                    <a href="{{ url_for('customer.detail_customer', number=customer.id) }}">Contact {{ customer.name.title() }}</a>
                 </td>
                 <td><a class="btn btn-default"
-                       href="{{ url_for('order.customer_orders', customer_id=customer.id) }}">Orders</a></td>
+                       href="{{ url_for('order.customer_orders', customer_id=customer.id) }}">Jobs</a></td>
                 <td><a class="btn btn-primary" href="{{ url_for('order.create_order', customer_id=customer.id) }}">New
-                    Order</a></td>
+                    Job</a></td>
                 <td><a class="btn btn-info" href="{{ url_for('customer.edit_customer', number=customer.id) }}">Edit Customer</a>
                 </td>
                 <td><a class="btn btn-danger" href="{{ url_for('customer.delete_customer', number=customer.id) }}">Delete</a>

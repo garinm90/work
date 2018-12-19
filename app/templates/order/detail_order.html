@@ -5,7 +5,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Order #</th>
+            <th>Job #</th>
             <th>Power Supply</th>
             <th>Controller</th>
             <th>Lights</th>
@@ -17,11 +17,13 @@
     <tr>
         <td>{{ order.id }}</td>
         {% if order.two_forty and order.three_twenty %}
-        <td>Both</td>
+        <td>320/240</td>
         {% elif order.three_twenty %}
         <td>320</td>
         {% elif order.two_forty %}
         <td>240</td>
+        {% else %}
+        <td></td>
         {% endif %}
         {% if order.controller %}
         {% for controller in order.controller %}
