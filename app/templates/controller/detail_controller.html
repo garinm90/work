@@ -9,28 +9,30 @@
             {{ controller.order.ride.capitalize() }} Controller #{{ controller.controller_number }}
         </h3>
         <h4>Created On: {{ controller.date_created.strftime('%m-%d-%Y') }}</h4>
-        <h4>Last Update: {{ controller.date_updated }}</h4>
+        <h4>Last Update: {{ controller.date_updated.strftime('%m-%d-%Y') }}</h4>
     </div>
     <hr>
     <div class="row">
         <div class="col-lg-3">
             {% if controller.t_one_thousand %}
-            T1000: {{ controller.t_one_thousand }}
+            <strong> T1000: </strong>{{ controller.t_one_thousand }}
             {% endif %}
         </div>
         <div class="col-lg-3">
             {% if controller.t_one_thousand_a %}
-            T1000A: {{ controller.t_one_thousand_a }}
+            <strong>T1000A:</strong> {{ controller.t_one_thousand_a }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.ym_four %}
-            YM4: {{ controller.ym_four }}
+            <strong>YM4:</strong>
+
+            {{ controller.ym_four }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.ym_eight %}
-            YM8: {{ controller.ym_eight }}
+            <strong>YM8: </strong>{{ controller.ym_eight }}
             {% endif %}
         </div>
 
@@ -39,22 +41,22 @@
     <div class="row">
         <div class="col-lg-3">
             {% if controller.falcon_two %}
-            F2: {{ controller.falcon_two }}
+            <strong>F2: </strong> {{ controller.falcon_two }}
             {% endif %}
         </div>
         <div class="col-lg-3">
             {% if controller.falcon_four %}
-            F4: {{ controller.falcon_four }}
+            <strong>F4: </strong> {{ controller.falcon_four }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.falcon_sixteen %}
-            F16: {{ controller.falcon_sixteen }}
+            <strong>F16: </strong> {{ controller.falcon_sixteen }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.raspberry_pi %}
-            Raspberry: {{ controller.raspberry_pi }}
+            <strong>Raspberry: </strong> {{ controller.raspberry_pi }}
             {% endif %}
         </div>
     </div>
@@ -62,16 +64,16 @@
     <div class="row">
         <div class="col-lg-3">
             {% if controller.tp_link %}
-            TP_Link: {{ controller.tp_link }}
+            <strong> TP_Link: </strong> {{ controller.tp_link }}
             {% endif %}</div>
         <div class="col-lg-3">
             {% if controller.twentyfour_to_five %}
-            24v to 5v: {{ controller.twentyfour_to_five }}
+            <strong>24v to 5v: </strong> {{ controller.twentyfour_to_five }}
             {% endif %}
         </div>
         <div class="col-lg-3">
             {% if controller.twentyfour_to_twelve %}
-            24v to 12v: {{ controller.twentyfour_to_twelve }}
+            <strong>24v to 12v: </strong> {{ controller.twentyfour_to_twelve }}
             {% endif %}
         </div>
 
@@ -82,27 +84,27 @@
     <div class="row">
         <div class="col-lg-3">
             {% if controller.number_of_datas %}
-            Datas: {{ controller.number_of_datas }}
+            <strong> Datas:</strong> {{ controller.number_of_datas }}
             {% endif %}
         </div>
         <div class="col-lg-3">
             {% if controller.spokes %}
-            Spokes: {{ controller.spokes }}
+            <strong> Spokes:</strong> {{ controller.spokes }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.phoenix_one_by_one %}
-            Phoenix 1x1: {{ controller.phoenix_one_by_one }}
+            <strong> Phoenix 1x1:</strong> {{ controller.phoenix_one_by_one }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.phoenix_one_by_two %}
-            Phoenix 1x2: {{ controller.phoenix_one_by_two }}
+            <strong> Phoenix 1x2:</strong> {{ controller.phoenix_one_by_two }}
             {% endif %}
         </div>
         <div class="col-lg-2">
             {% if controller.phoenix_two_by_two %}
-            Phoenix 2x2: {{ controller.phoenix_two_by_two }}
+            <strong> Phoenix 2x2:</strong> {{ controller.phoenix_two_by_two }}
             {% endif %}
         </div>
     </div>
@@ -110,10 +112,10 @@
     <div class="row">
         <div class="col-lg-12">
             {% if controller.boxes %}
-            Box Info: {{ controller.boxes }}
+            <strong> Box Info:</strong> {{ controller.boxes }}
             {% endif %}
         </div>
     </div>
 
-    
+
     {% endblock %}
