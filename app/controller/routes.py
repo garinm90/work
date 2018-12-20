@@ -15,7 +15,7 @@ def create_controller():
     customer_id = request.args.get('customer_id', 1)
     form = CreateControllerForm(order=order_id, customer=customer_id)
     form.customer_id.choices = [(c.id, '{}'.format(c)) for c in customers]
-    form.order_id.choices = [(o.id, '{} Order #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
+    form.order_id.choices = [(o.id, '{} Job #{}'.format(o.ride.capitalize(), o.id)) for o in orders]
     controller = Controller()
     if form.validate_on_submit():
         controller = Controller(controller_number=form.controller_number.data, order_id=form.order.data, customer_id=form.customer.data,
