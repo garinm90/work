@@ -2,14 +2,15 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+<a class="btn btn-info" href="{{ url_for('controller.edit_controller', controller_number=controller.controller_number) }}">Edit</a>
 <div class="row">
     <div class="text-center">
         <h3>
             {{ controller.customer }}'s
             {{ controller.order.ride.capitalize() }} Controller #{{ controller.controller_number }}
         </h3>
-        <h4>Created On: {{ controller.date_created.strftime('%m-%d-%Y') }}</h4>
-        <h4>Last Update: {{ controller.date_updated.strftime('%m-%d-%Y') }}</h4>
+        <h3><small>Created On: {{ controller.date_created.strftime('%m-%d-%Y') }}
+        Last Update: {{ controller.date_updated.strftime('%m-%d-%Y') }}</small></h3>
     </div>
     <hr>
     <div class="row">
