@@ -25,7 +25,7 @@ def create_order():
         db.session.commit()
         flash('Order created!')
         return redirect(url_for('main.index'))
-    return render_template('order/create_order.html', form=form, title=f'Create order for {customer.name.title()}')
+    return render_template('order/create_order.html', form=form, title=f'Create job for {customer.name.title()}')
 
 @bp.route('/edit_order/<number>', methods=['GET', 'POST'])
 @login_required
@@ -39,7 +39,7 @@ def edit_order(number):
         db.session.commit()
         flash(f'Updated order #{order.id} for {order.customer}')
         return redirect(url_for('order.detail_order', number=order.id))
-    return render_template('order/create_order.html', form=form, title=f'Edit Order for {order.customer}')
+    return render_template('order/create_order.html', form=form, title=f'Edit Job for {order.customer}')
 
 @bp.route('/order/<number>')
 @login_required
@@ -57,7 +57,7 @@ def customer_orders(customer_id):
         for image in order.image:
             url = images.url(image.filename)
             print(url)
-    return render_template('order/orders.html', orders=orders, title=f'Order List for {customer.name.title()}', customer_id=customer_id)
+    return render_template('order/orders.html', orders=orders, title=f'Job list for {customer.name.title()}', customer_id=customer_id)
 
 
 @bp.route('/orders')
