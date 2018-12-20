@@ -2,10 +2,10 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-<table class="table">
+<table id="controller_list" class="table table-bordered table-striped">
 <thead>
     <tr>
-        <th>Controller #</th>
+        <th>Controller</th>
         <th>Customer</th>
         <th>Ride</th>
         <th>Date Created</th>
@@ -17,7 +17,7 @@
         {% for controller in controllers %}
         <tr>
 <td>
-<a href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}">{{ controller.controller_number }}</a>
+<a class="btn btn-primary" href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}">#{{ controller.controller_number }}</a>
 </td>
 <td>
     {{controller.customer}}

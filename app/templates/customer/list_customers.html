@@ -7,7 +7,7 @@
             <a class="btn btn-primary btn-block" href="{{ url_for('customer.create_customer') }}">New Customer</a></a>
         </div>
     </div>
-    <table class="table">
+    <table id="customer_list" class="table table-bordered table-striped">
         <thead>
         <tr>
             <th>Contact</th>
@@ -23,7 +23,7 @@
                     <a href="{{ url_for('customer.detail_customer', number=customer.id) }}">Contact {{ customer.name.title() }}</a>
                 </td>
                 <td><a class="btn btn-default"
-                       href="{{ url_for('order.customer_orders', customer_id=customer.id) }}">Jobs</a></td>
+                       href="{{ url_for('order.customer_orders', customer_id=customer.id) }}">All Jobs</a></td>
                 <td><a class="btn btn-primary" href="{{ url_for('order.create_order', customer_id=customer.id) }}">New
                     Job</a></td>
                 <td><a class="btn btn-info" href="{{ url_for('customer.edit_customer', number=customer.id) }}">Edit Customer</a>

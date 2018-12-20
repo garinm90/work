@@ -3,25 +3,32 @@
 
 {% block app_content %}
 <h1>{{ title }}:</h1>
-<a class="btn btn-primary" href="{{ url_for('order.create_order', customer_id=customer_id) }}">New Order</a>
-<table class="table table-striped">
+<a class="btn btn-primary" href="{{ url_for('order.create_order', customer_id=customer_id) }}">New Job</a>
+<hr>
+<table id="customer_jobs" class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Job #</th>
             <th>Ride</th>
-            <th>Power Supply</th>
+            <th>Date</th>
+            <th>PS</th>
             <th>Lights</th>
             <th>Controller</th>
-            <th>Upload</th>
+            <th>GFX</th>
+            <th>CAD</th>
+            <th>Wiring</th>
+            <th>Images</th>
+            <th>Edit</th>
         </tr>
     </thead>
     {% for order in orders %}
     <tr>
         <td><a href="{{ url_for('order.detail_order', number=order.id) }}">{{ order.id }} Details</a></td>
         <td>{{ order.ride.capitalize() }}</td>
+        <td>{{ order.date_created.strftime('%m-%d-%Y') }}</td>
         <td>
             {% if order.two_forty and order.three_twenty %}
-            320/240
+            320-240
             {% elif order.three_twenty %}
             320
             {% elif order.two_forty %}
@@ -30,7 +37,7 @@
         </td>
 
         <td>
-            <ul>
+            <ul class="list-unstyled">
                 {% if order.bubble_six %}
                 <li>Bubble 6</li>
                 {% endif %}
@@ -78,21 +85,26 @@
                 <a href="{{ url_for('controller.detail_controller', controller_number=controller.controller_number) }}">  #{{ controller.controller_number }}</a> 
                 {% endfor %}
                 {% else %}
-                <a href="{{ url_for('controller.create_controller', order_id=order.id, customer_id=order.customer.id) }}">Add Controller</a>
+                <a class="btn btn-primary" href="{{ url_for('controller.create_controller', order_id=order.id, customer_id=order.customer.id) }}">Add</a>
                 {% endif %}
         </td>
 
         <td>
-            <div class="row">
-            <a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add Images</a>
-            <a class="btn btn-primary" href="#">Add CAD</a>
-        </div>
-        <br>
-        <div class="row">
-            <a class="btn btn-primary" href="#">Add Graphics</a>
-            <a class="btn btn-primary" href="#">Add Wiring</a>
-        </div>
+           
+            <a class="btn btn-primary" href="#">Add</a>
         </td>
+        <td>
+                <a class="btn btn-primary" href="#">Add</a>
+
+        </td>
+        <td>
+                <a class="btn btn-primary" href="#">Add </a>
+        </td>
+        <td>
+                <a class="btn btn-primary" href="{{ url_for('upload', order_id=order.id) }}">Add</a>
+
+        </td>
+        <td><a class="btn-info btn" href="{{ url_for('order.edit_order', number=order.id) }}">Edit</a></td>
     </tr>
     {% endfor %}
 </table>
