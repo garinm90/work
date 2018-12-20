@@ -34,6 +34,9 @@ app.register_blueprint(controller_bp)
 from app.calculator import bp as calculator_bp
 app.register_blueprint(calculator_bp)
 
+from app.graphics import bp as graphics_bp
+app.register_blueprint(graphics_bp)
+
 @identity_loaded.connect_via(app)
 def on_identity_loaded(sender, identity):
     # Set the identity user object
