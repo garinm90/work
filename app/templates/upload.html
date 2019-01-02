@@ -2,25 +2,18 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Upload Images</h1>
-    <h3>For: {{ order_information.customer }}'s {{ order_information.ride }} </h3>
-    <h3>Job #{{ order_information.id }} </h3>
+<h1>Upload Images</h1>
+<h3>For: {{ order_information.customer }}'s {{ order_information.ride }} </h3>
+<h3>Job #{{ order_information.id }} </h3>
 
-    <div class="row">
-        <div class="col-md-12">
-            <form class="form-horizontal" action="" method="post" , enctype="multipart/form-data">
-                <div class="form-group">
-                    <hr>
-                    {{ form.hidden_tag() }}
-                    {{ form.images }}
-                    <br>
-                    <fieldset disabled>
-                        {{ form.order }}
-                    </fieldset>
-                    <br>
-                    {{ form.submit(class_='btn btn-primary') }}
-                </div>
-            </form>
-        </div>
+
+<div class="row">
+    <div class="col-md-12">
+            {{ dropzone.create(action='upload') }}
+            {{ dropzone.load_js() }}
+            {{ dropzone.config() }}
     </div>
+</div>
+
+
 {% endblock %}

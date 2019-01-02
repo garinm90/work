@@ -15,20 +15,32 @@ def page_not_found(e):
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
-    order_id = request.args.get('order_id', 1)
+    order_id = request.args.get('order_id')
+    if order_id is not None:
+        session['order'] = order_id
     form = ImageUploadForm(order=order_id)
-    orders = Order.query.all()
-    order_information = Order.query.get(int(order_id))
-    orders = [(o.id, '{} Order #{}'.format(o.customer, o.id, o.ride)) for o in orders]
-    form.order.choices = orders
+    # orders = Order.query.all()
+    if order_id is None:
+        order_information = Order.query.get(int(session['order']))
+    else:
+        order_information = Order.query.get(int(order_id))
+    # orders = [(o.id, '{} Order #{}'.format(o.customer, o.id, o.ride)) for o in orders]
+    # form.order.choices = orders
     if request.method == 'POST':
-        for picture in request.files.getlist("images"):
-            filename = images.save(picture)
-            i = Image(filename=filename, order_id=form.order.data)
-            db.session.add(i)
-            db.session.commit()
-        flash('Uploaded!')
-        return redirect(url_for('detail_order', number=order_id))
+        for key, f in request.files.items():
+            if key.startswith('file'):
+                filename = images.save(f)
+                print(session['order'])
+                i = Image(filename=filename, order_id=session['order'])
+                db.session.add(i)
+                db.session.commit()
+                print('success')
+        # for picture in request.files.getlist("myDropzone"):
+            # print(picture)
+            # filename = images.save(picture)
+            # i = Image(filename=filename, order_id=form.order.data)
+            # db.session.add(i)
+            # db.session.commit()
     return render_template('upload.html', form=form, order_information=order_information)
 
 
