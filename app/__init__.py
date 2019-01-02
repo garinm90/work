@@ -6,6 +6,8 @@ from flask_migrate import Migrate
 from flask_login import LoginManager, current_user
 from flask_uploads import UploadSet, IMAGES, configure_uploads
 from flask_principal import Principal, UserNeed, RoleNeed, identity_loaded
+from flask_dropzone import Dropzone
+from flask_wtf import CSRFProtect
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -17,6 +19,8 @@ login.login_view = 'main.login'
 images = UploadSet('images', IMAGES)
 configure_uploads(app, images)
 principals = Principal(app)
+dropzone = Dropzone(app)
+csrf = CSRFProtect(app)
 
 
 from app.main import bp as main_bp

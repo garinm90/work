@@ -10,3 +10,4 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOADS_DEFAULT_DEST = basedir + '/app/static/'
     UPLOADS_DEFAULT_URL = 'http://127.0.0.1:5000/static'
+    DROPZONE_ENABLE_CSRF=True # enable CSRF protection
