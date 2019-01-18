@@ -105,7 +105,7 @@ class Controller(db.Model):
     raspberry_pi = db.Column(db.Integer())
     tp_link = db.Column(db.Integer())
     spokes = db.Column(db.Integer())
-    boxes = db.Column(db.String())
+    boxes = db.Column(db.Text())
     phoenix_one_by_one = db.Column(db.Integer())
     phoenix_one_by_two = db.Column(db.Integer())
     phoenix_two_by_two = db.Column(db.Integer())
@@ -115,7 +115,7 @@ class Controller(db.Model):
 
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String())
-    url = db.Column(db.String())
+    filename = db.Column(db.Text())
+    url = db.Column(db.Text())
     controller_id = db.Column(db.Integer(), db.ForeignKey('controller.id'))
     order_id = db.Column(db.Integer(), db.ForeignKey('order.id'))
