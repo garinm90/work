@@ -11,3 +11,5 @@ class Config(object):
     UPLOADS_DEFAULT_DEST = basedir + '/app/static/'
     UPLOADS_DEFAULT_URL = 'http://127.0.0.1:5000/static'
     DROPZONE_ENABLE_CSRF=True # enable CSRF protection
+    DROPZONE_UPLOAD_MULTIPLE = True
+    DROPZONE_PARALLEL_UPLOADS = 5

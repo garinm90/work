@@ -2,6 +2,7 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
+{{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
 <h1>Upload Images</h1>
 <h3>For: {{ order_information.customer }}'s {{ order_information.ride }} </h3>
 <h3>Job #{{ order_information.id }} </h3>

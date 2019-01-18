@@ -24,7 +24,7 @@ def create_order():
         db.session.add(order)
         db.session.commit()
         flash('Order created!')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('order.detail_order', number=order.id))
     return render_template('order/create_order.html', form=form, title=f'Create job for {customer.name.title()}')
 
 @bp.route('/edit_order/<number>', methods=['GET', 'POST'])
@@ -64,4 +64,3 @@ def customer_orders(customer_id):
 def list_orders():
     orders = Order.query.all()
     return render_template('order/list_orders.html', orders=orders, title='All Orders')
-

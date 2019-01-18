@@ -46,7 +46,7 @@
             <td>
                 {% if order.image %}
                 <a class="btn-sm btn-success" href="{{ url_for('upload', order_id=order.id) }}">Add</a>
-                <a class="btn-sm btn-success" href="#">View</a>
+                <a class="btn-sm btn-success" href="{{ url_for('order.detail_order', number=order.id) }}">View</a>
                 {% else %}
                 <a class="btn btn-danger" href="{{ url_for('upload', order_id=order.id) }}">Add</a>
                 {% endif %}
